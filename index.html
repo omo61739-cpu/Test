@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Progressive Self‑Development</title>
+<title>Progressive Self-Development</title>
 <style>
   :root{
     --bg:#f6f7fb;--card:#ffffff;--ink:#0f1220;--muted:#6b7280;
@@ -61,7 +61,7 @@
   #pendingList .item{display:flex;gap:8px;margin:4px 0;align-items:center}
   #pendingList .delta{min-width:72px;font-weight:700}
 
-  /* ประวัติอ่านง่าย: คอลัมน์หมายเหตุห่อบรรทัด */
+  /* ประวัติอ่านง่าย */
   .note-cell{white-space:pre-wrap;word-break:break-word}
 
   /* ===== Modal ใส่หมายเหตุ + ประวัติเควส ===== */
@@ -74,12 +74,17 @@
   .hist .entry{border-bottom:1px dashed #e5e7eb;padding:6px 0}
   .hist .entry:last-child{border-bottom:0}
   .dialog footer{display:flex;gap:10px;justify-content:flex-end;padding:12px 14px;border-top:1px solid var(--border);background:#fafafa}
+
+  /* ===== หน้า Notes ของหัวข้อย่อย ===== */
+  #notesList .note-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:10px;margin-bottom:10px}
+  #notesList .note-head{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+  #notesList input.title{font-weight:700}
 </style>
 </head>
 <body>
 <div class="container">
   <header>
-    <h1>Progressive Self‑Development</h1>
+    <h1>Progressive Self-Development</h1>
     <div class="wrap">
       <button class="btn" id="addTopicBtn">เพิ่มหัวข้อหลัก</button>
       <button class="btn secondary" id="exportAllBtn">ส่งออกข้อมูลทั้งหมด</button>
@@ -100,11 +105,13 @@
     <canvas id="radarCanvas" height="140"></canvas>
   </div>
 
+  <!-- ================= Home ================= -->
   <section id="homeView" class="grid">
     <div class="card"><div class="small">หน้าแรก • แตะหัวข้อหลักเพื่อเข้าไปเพิ่ม/จัดการหัวข้อย่อย • บาร์ของหัวข้อหลัก = ค่าเฉลี่ยเปอร์เซ็นต์ของหัวข้อย่อยทั้งหมด</div></div>
     <div id="topicsList" class="grid"></div>
   </section>
 
+  <!-- ================= Main Topic ================= -->
   <section id="mainView" class="grid" style="display:none">
     <div class="card">
       <div class="row" style="align-items:center">
@@ -127,12 +134,15 @@
     </div>
   </section>
 
+  <!-- ================= Sub Topic (quests) ================= -->
   <section id="subView" class="grid" style="display:none">
     <div class="card">
       <div class="row" style="align-items:center">
         <button class="btn ghost" id="backMainBtn">← กลับหัวข้อหลัก</button>
         <h2 id="subTitle" style="margin:0"></h2>
         <span class="right small" id="subLive"></span>
+        <!-- ปุ่มไปหน้ารายละเอียด -->
+        <button class="btn secondary" id="openNotesBtn" title="รายละเอียดหัวข้อย่อยนี้">รายละเอียด</button>
       </div>
       <div class="spacer"></div>
       <div class="grid">
@@ -174,7 +184,6 @@
           </div>
 
           <div id="questsList" class="grid" style="margin-top:8px"></div>
-
           <div id="pendingList" style="display:none"></div>
 
           <div class="hr"></div>
@@ -202,9 +211,32 @@
       </div>
     </div>
   </section>
+
+  <!-- ================= Notes Editor (รายละเอียดหัวข้อย่อย) ================= -->
+  <section id="notesView" class="grid" style="display:none">
+    <div class="card">
+      <div class="row" style="align-items:center">
+        <button class="btn ghost" id="backToSubBtn">← กลับหัวข้อย่อย</button>
+        <h2 id="notesTitle" style="margin:0"></h2>
+        <span class="right small" id="notesHint">เพิ่มหลายบล็อกได้ เช่น “ภาพรวม”, “เช็คลิสต์”, “บันทึกสั้น ๆ”</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row" style="align-items:center">
+        <h3 style="margin:0">รายละเอียด</h3>
+        <button class="btn secondary right" id="addNoteBlockBtn">เพิ่มบล็อก</button>
+      </div>
+      <div id="notesList" style="margin-top:10px"></div>
+      <div class="hr"></div>
+      <div class="row">
+        <button class="btn success" id="saveNotesBtn">บันทึก</button>
+        <button class="btn ghost" id="discardNotesBtn">ยกเลิกการเปลี่ยนแปลง</button>
+      </div>
+    </div>
+  </section>
 </div>
 
-<!-- ===== Modal: เพิ่มหมายเหตุ + ประวัติ ===== -->
+<!-- ===== Modal: เพิ่มหมายเหตุ + ประวัติเควส ===== -->
 <div id="noteModal" class="modal" aria-hidden="true">
   <div class="dialog" role="dialog" aria-modal="true">
     <header>
@@ -241,14 +273,15 @@ function loadDB(){try{const raw=localStorage.getItem(DB_KEY);return raw?JSON.par
 function saveDB(db){localStorage.setItem(DB_KEY, JSON.stringify(db));}
 let db=loadDB();
 
-function ensureMain(t){ if(!t.subs) t.subs=[]; return t; }
+function ensureMain(t){ t.subs ||= []; return t; }
 function ensureSub(s){
-  if(!s.settings) s.settings={};
+  s.settings ||= {};
   s.settings.maxPoints=Math.max(1,Number(s.settings.maxPoints||100));
   s.settings.segments=Math.max(0,Number(s.settings.segments||0));
   s.settings.pointsPerStat=Math.max(1,Number(s.settings.pointsPerStat||10));
-  if(!s.transactions) s.transactions=[];
-  if(!s.quests) s.quests=[];
+  s.transactions ||= [];
+  s.quests ||= [];
+  s.details ||= []; // บันทึกหลายบล็อก {id,title,content,created,updated}
   return s;
 }
 function computeSub(sub){
@@ -332,6 +365,7 @@ function drawRadarOn(canvasId, labels, percents, subtitle){
 const homeView=document.getElementById('homeView');
 const mainView=document.getElementById('mainView');
 const subView=document.getElementById('subView');
+const notesView=document.getElementById('notesView');
 const topicsList=document.getElementById('topicsList');
 
 const backHomeBtn=document.getElementById('backHomeBtn');
@@ -344,6 +378,7 @@ const deleteMainBtn=document.getElementById('deleteMainBtn');
 const backMainBtn=document.getElementById('backMainBtn');
 const subTitle=document.getElementById('subTitle');
 const subLive=document.getElementById('subLive');
+const openNotesBtn=document.getElementById('openNotesBtn');
 const subMaxPoints=document.getElementById('subMaxPoints');
 const subSegments=document.getElementById('subSegments');
 const subPointsPerStat=document.getElementById('subPointsPerStat');
@@ -358,6 +393,14 @@ const exportCsvBtn=document.getElementById('exportCsvBtn');
 const applyStageBtn=document.getElementById('applyStageBtn');
 const discardStageBtn=document.getElementById('discardStageBtn');
 const deleteSubBtn=document.getElementById('deleteSubBtn');
+
+/* Notes view elements */
+const notesTitle=document.getElementById('notesTitle');
+const notesList=document.getElementById('notesList');
+const addNoteBlockBtn=document.getElementById('addNoteBlockBtn');
+const saveNotesBtn=document.getElementById('saveNotesBtn');
+const discardNotesBtn=document.getElementById('discardNotesBtn');
+const backToSubBtn=document.getElementById('backToSubBtn');
 
 /* ฟอร์มเพิ่มเควส */
 const addQuestBtn=document.getElementById('addQuestBtn');
@@ -386,7 +429,7 @@ function stageTotalDelta(){ return stage.events.reduce((s,e)=>s+e.delta,0); }
 
 /* ---------- Home ---------- */
 function renderHome(){
-  homeView.style.display='grid'; mainView.style.display='none'; subView.style.display='none';
+  homeView.style.display='grid'; mainView.style.display='none'; subView.style.display='none'; notesView.style.display='none';
   topicsList.innerHTML='';
   if(!db.topics.length){
     const card=document.createElement('div'); card.className='card';
@@ -420,7 +463,7 @@ function renderHome(){
 function openMain(id){
   currentMainId=id; currentSubId=null;
   const main=db.topics.find(t=>t.id===id); ensureMain(main);
-  homeView.style.display='none'; mainView.style.display='grid'; subView.style.display='none';
+  homeView.style.display='none'; mainView.style.display='grid'; subView.style.display='none'; notesView.style.display='none';
   mainTitle.textContent=main.name;
   mainSummary.textContent='ค่าเฉลี่ยย่อยทั้งหมด: '+formatNumber(computeMainPercent(main))+'% • '+main.subs.length+' ย่อย';
   subsList.innerHTML='';
@@ -464,7 +507,7 @@ function openSub(subId){
   currentSubId=subId;
   const main=db.topics.find(t=>t.id===currentMainId);
   const sub=main.subs.find(s=>s.id===subId); ensureSub(sub);
-  homeView.style.display='none'; mainView.style.display='none'; subView.style.display='grid';
+  homeView.style.display='none'; mainView.style.display='none'; subView.style.display='grid'; notesView.style.display='none';
   subTitle.textContent=main.name+' › '+sub.name;
   subMaxPoints.value=sub.settings.maxPoints;
   subSegments.value=sub.settings.segments;
@@ -526,25 +569,17 @@ function openNoteModal(action, quest){
   nmLabel.textContent = action==='plus' ? 'ใส่หมายเหตุ (ไม่บังคับ) — เพิ่มคะแนน' : 'ใส่หมายเหตุ (ไม่บังคับ) — ลดคะแนน';
   nmDelta.textContent = `ผลกระทบครั้งนี้: ${modalDelta>0?'+':''}${modalDelta} pts`;
   nmInput.value='';
-  // ----- ประวัติเควสนี้ -----
   const hist = (sub.transactions||[])
     .filter(r => r.questId ? r.questId===quest.id : (r.note||'').includes(quest.title))
-    .slice(-30) // เอาใหม่สุด 30 รายการพออ่านสบาย
-    .reverse();
-  if(!hist.length){
-    nmHist.innerHTML = '<div class="small">ยังไม่มีประวัติของเควสนี้</div>';
-  }else{
-    nmHist.innerHTML = hist.map(r=>{
-      const d=new Date(r.time);
-      return `<div class="entry"><div class="small">${d.toLocaleString()} • ${r.delta>0?'+':''}${r.delta} pts</div><div>${(r.note||'')}</div></div>`;
-    }).join('');
-  }
+    .slice(-30).reverse();
+  nmHist.innerHTML = hist.length? hist.map(r=>{
+    const d=new Date(r.time);
+    return `<div class="entry"><div class="small">${d.toLocaleString()} • ${r.delta>0?'+':''}${r.delta} pts</div><div>${(r.note||'')}</div></div>`;
+  }).join('') : '<div class="small">ยังไม่มีประวัติของเควสนี้</div>';
   noteModal.style.display='flex';
   nmInput.focus();
 }
 function closeNoteModal(){ noteModal.style.display='none'; }
-
-/* ปุ่ม modal */
 [nmClose,nmCancel].forEach(b=>b.addEventListener('click',closeNoteModal));
 nmSave.addEventListener('click',()=>{
   if(!modalQuest) return;
@@ -557,7 +592,6 @@ nmSave.addEventListener('click',()=>{
   closeNoteModal();
   renderSubPreview(); renderPending();
 });
-/* ปิด modal เมื่อคลิกนอกกล่อง */
 noteModal.addEventListener('click',e=>{ if(e.target===noteModal) closeNoteModal(); });
 
 /* ----- Quests list + Add ----- */
@@ -591,8 +625,6 @@ function renderQuests(){
     questsList.appendChild(row);
   });
 }
-
-/* ปุ่ม “เพิ่ม Quest” */
 addQuestBtn.addEventListener('click',()=>{
   questForm.style.display = questForm.style.display==='none' ? 'flex' : 'none';
   if(questForm.style.display==='flex') questName.focus();
@@ -611,7 +643,7 @@ questSaveBtn.addEventListener('click',()=>{
   renderQuests();
 });
 
-/* บันทึก / ยกเลิก */
+/* บันทึก / ยกเลิก คะแนน */
 applyStageBtn.addEventListener('click',()=>{
   const main=db.topics.find(t=>t.id===currentMainId);
   const sub=main.subs.find(s=>s.id===currentSubId); ensureSub(sub);
@@ -651,6 +683,67 @@ exportCsvBtn.addEventListener('click',()=>{
   const rows=[['time','note','delta','questId','questTitle']].concat((sub.transactions||[]).map(r=>[r.time,r.note||'',r.delta,r.questId||'',r.questTitle||'']));
   const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
   download(main.name.replace(/\s+/g,'_')+'__'+sub.name.replace(/\s+/g,'_')+'_history.csv', csv);
+});
+
+/* ===== Notes Editor logic ===== */
+let notesStage=null; // สำเนาแก้ไขชั่วคราวของ sub.details
+function openNotes(){
+  // ไปหน้า notes ของ currentSubId
+  const main=db.topics.find(t=>t.id===currentMainId);
+  const sub=main.subs.find(s=>s.id===currentSubId); ensureSub(sub);
+  homeView.style.display='none'; mainView.style.display='none'; subView.style.display='none'; notesView.style.display='grid';
+  notesTitle.textContent = `${main.name} › ${sub.name} — รายละเอียด`;
+  // deep copy
+  notesStage = (sub.details||[]).map(x=>({...x}));
+  renderNotesList();
+}
+openNotesBtn.addEventListener('click', openNotes);
+backToSubBtn.addEventListener('click', ()=>openSub(currentSubId));
+
+function renderNotesList(){
+  if(!notesStage) notesStage=[];
+  notesList.innerHTML='';
+  if(!notesStage.length){
+    const emp=document.createElement('div'); emp.className='small'; emp.textContent='ยังไม่มีบันทึก กด “เพิ่มบล็อก” ด้านขวา';
+    notesList.appendChild(emp); return;
+  }
+  notesStage.forEach((blk,i)=>{
+    const card=document.createElement('div'); card.className='note-card';
+    card.innerHTML=`
+      <div class="note-head">
+        <input class="title" type="text" placeholder="หัวข้อ (ไม่บังคับ)" value="${blk.title||''}" style="flex:1">
+        <button class="btn ghost" data-i="${i}">ลบ</button>
+      </div>
+      <textarea class="content" placeholder="พิมพ์รายละเอียดที่นี่">${blk.content||''}</textarea>
+      <div class="small" style="margin-top:6px;color:#6b7280">อัปเดตล่าสุด: ${blk.updated? new Date(blk.updated).toLocaleString():'—'}</div>
+    `;
+    const [titleInput] = card.getElementsByClassName('title');
+    const [contentArea] = card.getElementsByClassName('content');
+    titleInput.oninput = ()=>{ blk.title = titleInput.value; };
+    contentArea.oninput = ()=>{ blk.content = contentArea.value; blk.updated = nowISO(); };
+    card.querySelector('button').onclick = ()=>{
+      if(!confirm('ลบบล็อกนี้?')) return;
+      notesStage.splice(i,1); renderNotesList();
+    };
+    notesList.appendChild(card);
+  });
+}
+addNoteBlockBtn.addEventListener('click', ()=>{
+  notesStage ||= [];
+  notesStage.push({id:uid(), title:'', content:'', created:nowISO(), updated:nowISO()});
+  renderNotesList();
+});
+saveNotesBtn.addEventListener('click', ()=>{
+  const main=db.topics.find(t=>t.id===currentMainId);
+  const sub=main.subs.find(s=>s.id===currentSubId); ensureSub(sub);
+  sub.details = notesStage.map(x=>({...x, id: x.id || uid(), updated: x.updated || nowISO(), created: x.created || nowISO()}));
+  saveDB(db);
+  alert('บันทึกรายละเอียดแล้ว');
+  openSub(currentSubId);
+});
+discardNotesBtn.addEventListener('click', ()=>{
+  if(!confirm('ยกเลิกการเปลี่ยนแปลงทั้งหมดในรายละเอียด?')) return;
+  openSub(currentSubId);
 });
 
 /* ===== Add / Export ===== */
