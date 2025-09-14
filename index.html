@@ -3,76 +3,91 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Progressive Self-Development • Tier System</title>
+<title>Progressive Self-Development • Tier System (Polish UI)</title>
 <style>
   :root{
-    --bg:#f6f7fb;--card:#ffffff;--ink:#0f1220;--muted:#6b7280;
+    --bg:#f5f7fb;--card:#ffffff;--ink:#0f1220;--muted:#6b7280;
     --accent:#2563eb;--accent-2:#10b981;--danger:#ef4444;--border:#e5e7eb;
-    --ring:0 10px 30px rgba(15,18,32,.06);
-    --gold:#d4af37; --diamond:#55d0ff;
+    --ring:0 12px 40px rgba(15,18,32,.06);
+    --gold:#d4af37; --gold-2:#ffe08a;
+    --dia:#55d0ff;  --dia-2:#a0f0ff;
   }
   *{box-sizing:border-box}
   html,body{height:100%}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-  .container{max-width:1000px;margin:0 auto;padding:16px}
-  header{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:12px}
-  h1{font-size:20px;margin:0}
-  .btn{border:0;border-radius:12px;padding:10px 14px;font-size:14px;cursor:pointer;background:var(--accent);color:#fff;transition:.15s;box-shadow:0 1px 1px rgba(0,0,0,.04)}
-  .btn:hover{filter:brightness(.96)}
+  body{margin:0;background:linear-gradient(180deg,#f7f9ff,#eef2ff);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+  .container{max-width:1040px;margin:0 auto;padding:18px}
+  header{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:14px}
+  h1{font-size:22px;margin:0;letter-spacing:.2px}
+  .btn{border:0;border-radius:12px;padding:10px 14px;font-size:14px;cursor:pointer;background:var(--accent);color:#fff;transition:.18s;box-shadow:0 1px 1px rgba(0,0,0,.04)}
+  .btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(37,99,235,.25)}
   .btn.secondary{background:#e5e7eb;color:#111}
   .btn.ghost{background:transparent;border:1px solid var(--border);color:var(--ink)}
-  .btn.success{background:var(--accent-2);color:#fff}
-  .btn.danger{background:var(--danger);color:#fff}
+  .btn.success{background:var(--accent-2)}
+  .btn.danger{background:var(--danger)}
   .grid{display:grid;gap:12px}
-  .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px;box-shadow:var(--ring)}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:16px;box-shadow:var(--ring)}
   label{font-size:12px;color:var(--muted);display:block;margin-bottom:6px}
   input[type="text"],input[type="number"],textarea{width:100%;padding:10px;border:1px solid var(--border);border-radius:12px;background:#fff}
   .small{font-size:12px;color:var(--muted)}
   .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
   .spacer{height:8px}
-  .pill{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid var(--border);font-size:12px;color:#374151;background:#f9fafb}
+  .pill{display:inline-block;padding:4px 10px;border-radius:999px;border:1px solid var(--border);font-size:12px;color:#374151;background:#f9fafb}
+  .tag{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid var(--border);font-size:12px;background:#fff;margin-left:6px}
   .right{margin-left:auto}
   .wrap{display:flex;gap:12px;flex-wrap:wrap}
 
-  /* home / list */
-  .topic{display:flex;gap:12px;align-items:center}
-  .topic-name{flex:0 0 240px;font-weight:600}
-  .bar{position:relative;height:16px;background:#f1f5f9;border-radius:10px;overflow:hidden;border:1px solid var(--border)}
-  .bar>span{position:absolute;left:0;top:0;height:100%;background:linear-gradient(90deg,#60a5fa,#2563eb)}
-  .bar .ticks{position:absolute;inset:0;pointer-events:none}
-  .tick{position:absolute;top:-3px;bottom:-3px;width:1px;background:#e5e7ef}
-  .bar.gold{border-color:var(--gold)}
-  .bar.gold>span{background:linear-gradient(90deg,#ffe08a,#d4af37)}
-  .bar.dia{border-color:var(--diamond)}
-  .bar.dia>span{background:linear-gradient(90deg,#a0f0ff,#55d0ff)}
+  /* ======= Radar ======= */
+  #radarCard canvas,#topicRadarCard canvas{display:block;width:100%;max-width:720px;margin:auto;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--ring)}
 
-  /* radar canvases (ยังคงไว้) */
-  #radarCard canvas,#topicRadarCard canvas{display:block;width:100%;max-width:700px;margin:auto;background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:var(--ring)}
-
-  /* Tier header */
-  .tier-head{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:14px;align-items:center}
-  .tier-img{display:flex;justify-content:center;align-items:center;border:1px dashed var(--border);border-radius:14px;min-height:220px;background:#fafafa;overflow:hidden}
-  .tier-img img{max-width:100%;max-height:220px;display:block}
-  .tier-meta{display:grid;gap:8px}
+  /* ======= Tier Header ======= */
+  .tier-head{display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:16px;align-items:center}
+  .tier-head.centered{grid-template-columns:1fr 1fr}
+  .tier-col.center{grid-column:1 / span 2;text-align:center}
   .tier-title{font-weight:700}
-  .seg-label{display:flex;justify-content:space-between}
+  .tier-img{display:inline-block;border:1px solid var(--border);border-radius:16px;background:#fff;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.06)}
+  .tier-img img{display:block;max-width:100%;height:auto}
 
-  /* Modal (reusable) */
+  /* ======= Pretty segmented bars ======= */
+  .segbar{display:flex;gap:8px;align-items:center}
+  .segbar .seg{flex:1;height:14px;border-radius:999px;position:relative;overflow:hidden;border:1px solid #dce3f2;background:linear-gradient(180deg,#eef2f7,#e8edf6);box-shadow:inset 0 1px 2px rgba(0,0,0,.06)}
+  .segbar .fill{position:absolute;inset:0;right:auto;width:0;transition:width .45s cubic-bezier(.2,.8,.2,1);background:linear-gradient(90deg,#7bb0ff,#3b82f6);}
+  .segbar .gloss{position:absolute;inset:auto 0 0 0;height:40%;background:linear-gradient(180deg,rgba(255,255,255,.7),rgba(255,255,255,0));pointer-events:none}
+  /* Gold */
+  .segbar.gold .seg{border-color:#f1e2a8;background:linear-gradient(180deg,#fff7d5,#fdecb3)}
+  .segbar.gold .fill{background:linear-gradient(90deg,var(--gold-2),var(--gold))}
+  /* Diamond */
+  .segbar.dia .seg{border-color:#cbefff;background:linear-gradient(180deg,#eefcff,#dff6ff)}
+  .segbar.dia .fill{background:linear-gradient(90deg,var(--dia-2),var(--dia))}
+  /* tiny marker caps when segmentsเยอะ */
+  .segbar .seg::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.45)}
+  .seg-label{display:flex;justify-content:space-between;align-items:center}
+
+  /* ======= List topic bar (home/main) ======= */
+  .topic{display:flex;gap:12px;align-items:center}
+  .topic-name{flex:0 0 260px;font-weight:600}
+  .listbar{position:relative;flex:1;height:12px;background:#eef3fb;border:1px solid var(--border);border-radius:999px;overflow:hidden}
+  .listbar>span{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,#9cc1ff,#2563eb);transition:width .4s}
+
+  /* ======= Quest row ======= */
+  .quest-row{display:grid;grid-template-columns:1fr 360px 230px;gap:14px;align-items:center}
+  .quest-title{font-weight:700}
+  .cond{margin-top:4px}
+  .quest-card{border:1px solid var(--border);border-radius:14px;padding:12px;background:#fff}
+  .quest-row .btn{padding:9px 12px}
+  @media (max-width:900px){ .quest-row{grid-template-columns:1fr} }
+
+  /* ======= Modal ======= */
   .modal{position:fixed;inset:0;background:rgba(15,18,32,.45);display:none;align-items:center;justify-content:center;padding:14px;z-index:50}
-  .dialog{width:min(980px,calc(100% - 24px));max-height:90vh;overflow:auto;background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.18)}
-  .dialog header{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--border)}
-  .dialog .content{padding:14px}
-  .dialog footer{display:flex;gap:10px;justify-content:flex-end;padding:12px 14px;border-top:1px solid var(--border);background:#fafafa}
+  .dialog{width:min(980px,calc(100% - 24px));max-height:90vh;overflow:auto;background:#fff;border:1px solid var(--border);border-radius:18px;box-shadow:0 26px 70px rgba(0,0,0,.18)}
+  .dialog header{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border)}
+  .dialog .content{padding:16px}
+  .dialog footer{display:flex;gap:10px;justify-content:flex-end;padding:12px 16px;border-top:1px solid var(--border);background:#fafafa}
+  .tier-row{display:grid;grid-template-columns:140px 1fr 140px 230px;gap:12px;align-items:center;margin-bottom:10px}
+  .img-thumb{width:100%;height:auto;max-height:92px;object-fit:cover;border:1px solid var(--border);border-radius:12px;background:#f2f2f2}
 
-  /* Tier builder rows */
-  .tier-row{display:grid;grid-template-columns:140px 1fr 140px 120px;gap:10px;align-items:center;margin-bottom:8px}
-  .img-thumb{width:100%;height:76px;object-fit:cover;border:1px solid var(--border);border-radius:10px;background:#f2f2f2}
-  .help{color:#6b7280;font-size:12px}
-
-  /* Quest row look */
-  .quest-row{display:grid;grid-template-columns:1fr 260px 210px;gap:10px;align-items:center}
-  .quest-title{font-weight:600}
-  .tag{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid var(--border);font-size:12px;background:#fff;margin-left:6px}
+  /* tiny helpers */
+  .fade-in{animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -82,23 +97,22 @@
     <div class="wrap">
       <button class="btn" id="addTopicBtn">เพิ่มหัวข้อหลัก</button>
       <button class="btn secondary" id="exportAllBtn">ส่งออกข้อมูลทั้งหมด</button>
-      <span class="pill">v3 • Local (Tier)</span>
+      <span class="pill">v3.2 • Local (Polished)</span>
     </div>
   </header>
 
-  <!-- Radar overview (เดิม) -->
   <div class="card" id="radarCard" style="overflow:hidden">
-    <div class="small" style="margin-bottom:6px">สรุปภาพรวมหน้าแรก (ยังคงรูปเรดาร์เดิมไว้): ค่าเฉลี่ยของหัวข้อหลัก</div>
+    <div class="small" style="margin-bottom:6px">สรุปภาพรวมหน้าแรก</div>
     <canvas id="radarCanvas" height="140"></canvas>
   </div>
 
-  <!-- Home -->
+  <!-- HOME -->
   <section id="homeView" class="grid">
-    <div class="card"><div class="small">แตะหัวข้อหลักเพื่อเข้าไปจัดการหัวข้อย่อย • ตอนสร้างหัวข้อย่อยจะมีตัวช่วย “ตั้งค่า Tier ทั้งหมด” ก่อนใช้งาน</div></div>
+    <div class="card"><div class="small">แตะหัวข้อหลักเพื่อจัดการหัวข้อย่อย</div></div>
     <div id="topicsList" class="grid"></div>
   </section>
 
-  <!-- Main -->
+  <!-- MAIN -->
   <section id="mainView" class="grid" style="display:none">
     <div class="card">
       <div class="row">
@@ -123,7 +137,7 @@
     </div>
   </section>
 
-  <!-- Sub (Tier System) -->
+  <!-- SUB -->
   <section id="subView" class="grid" style="display:none">
     <div class="card">
       <div class="row">
@@ -134,23 +148,23 @@
       <div class="spacer"></div>
 
       <!-- Tier header -->
-      <div class="tier-head">
-        <div>
-          <div class="small tier-title" id="tierLeftTitle">Tier ปัจจุบัน</div>
+      <div class="tier-head" id="tierHead">
+        <div class="tier-col" id="tierLeftCol">
+          <div class="small tier-title">Tier ปัจจุบัน</div>
           <div class="tier-img"><img id="tierLeftImg" alt=""></div>
         </div>
 
-        <div class="tier-meta">
+        <div id="tierMetaCol">
           <div class="row">
             <div class="small">สถานะภาพรวมของหัวข้อย่อยนี้</div>
             <div class="right pill" id="tierBadge">Tier 1 / 1</div>
           </div>
           <div class="seg-label small"><span>ความคืบหน้าเฉลี่ยจากทุก Quest</span><span id="tierPercent">0%</span></div>
-          <div class="bar" id="subProgressBar"><span style="width:0%"></span><div class="ticks" id="subTicks"></div></div>
-          <div class="help">* เมื่อหลอดนี้เต็มจะเลื่อนไป Tier ถัดไป และรีเซ็ตหลอดรวมใหม่</div>
+          <div id="subSegbar" class="segbar"></div>
+          <div class="small">* หลอดรวมเต็มแล้วจะเลื่อนไป Tier ถัดไป และรีเซ็ตหลอดใหม่</div>
         </div>
 
-        <div>
+        <div class="tier-col" id="tierRightCol">
           <div class="small tier-title" id="tierRightTitle">Tier ถัดไป</div>
           <div class="tier-img"><img id="tierRightImg" alt=""></div>
         </div>
@@ -166,13 +180,13 @@
       <div id="questsList" class="grid" style="margin-top:8px"></div>
     </div>
 
-    <!-- ประวัติแบบย่อ (optional ให้เหลือพื้นที่) -->
+    <!-- History -->
     <div class="card">
       <div class="row" style="align-items:center">
         <h3 style="margin:0">ประวัติ</h3>
         <button class="btn secondary right" id="exportCsvBtn">ส่งออก CSV</button>
       </div>
-      <div class="small" style="margin:6px 0">* ระบบ Tier ใหม่จะบันทึกเหตุการณ์เลื่อนชั้นไว้ในประวัติอัตโนมัติ</div>
+      <div class="small" style="margin:6px 0">* ระบบจะบันทึกเหตุการณ์เลื่อน Tier อัตโนมัติ</div>
       <table id="historyTable" style="width:100%;border-collapse:collapse">
         <colgroup><col style="width:180px"><col><col style="width:120px"></colgroup>
         <thead><tr><th class="small" style="text-align:left;color:#6b7280">วัน/เวลา</th><th class="small" style="text-align:left;color:#6b7280">รายละเอียด</th><th class="small" style="text-align:left;color:#6b7280">ชนิด</th></tr></thead>
@@ -180,28 +194,26 @@
       </table>
     </div>
 
-    <div class="card">
-      <button class="btn danger" id="deleteSubBtn">ลบหัวข้อย่อยนี้</button>
-    </div>
+    <div class="card"><button class="btn danger" id="deleteSubBtn">ลบหัวข้อย่อยนี้</button></div>
   </section>
 </div>
 
-<!-- ===== Modal: ตั้งค่า Tier ตอน "เพิ่มหัวข้อย่อย" ===== -->
+<!-- ====== Sub Setup Modal ====== -->
 <div id="subSetupModal" class="modal">
-  <div class="dialog">
+  <div class="dialog fade-in">
     <header>
       <div style="font-weight:700">ตั้งค่า Tier สำหรับหัวข้อย่อยใหม่</div>
       <button class="btn ghost" id="ssClose">ปิด</button>
     </header>
     <div class="content">
       <div class="row">
-        <div style="flex:1"><label>ชื่อหัวข้อย่อย</label><input id="ssName" type="text" placeholder="เช่น Self-Regulation (SR)"></div>
+        <div style="flex:1"><label>ชื่อหัวข้อย่อย</label><input id="ssName" type="text" placeholder="เช่น Self-Discipline"></div>
         <div style="width:160px"><label>จำนวน Tier</label><input id="ssCount" type="number" min="1" step="1" value="3"></div>
       </div>
       <div class="spacer"></div>
       <div class="small">ตั้งค่าแต่ละ Tier (อัปโหลดรูป + ตั้งชื่อ + จำนวน “หลอด” ที่ต้องใช้เพื่อเลื่อนชั้นของหัวข้อย่อย)</div>
       <div id="ssRows"></div>
-      <div class="help">* รูปจะถูกเก็บเป็นข้อมูลภายในเบราว์เซอร์ (LocalStorage)</div>
+      <div class="small">* รูปถูกเก็บเป็น Data URL ในเครื่อง (LocalStorage)</div>
     </div>
     <footer>
       <button class="btn ghost" id="ssCancel">ยกเลิก</button>
@@ -210,9 +222,9 @@
   </div>
 </div>
 
-<!-- ===== Modal: ตั้งค่า Tier ของ Quest ===== -->
+<!-- ====== Quest Setup Modal ====== -->
 <div id="questSetupModal" class="modal">
-  <div class="dialog">
+  <div class="dialog fade-in">
     <header>
       <div style="font-weight:700">ตั้งค่า Tier ของ Quest</div>
       <button class="btn ghost" id="qsClose">ปิด</button>
@@ -223,22 +235,22 @@
         <div style="width:160px"><label>จำนวน Tier</label><input id="qsCount" type="number" min="1" step="1" value="3"></div>
       </div>
       <div class="spacer"></div>
-      <div class="small">กำหนดจำนวน “หลอด” ที่ต้องใช้ในแต่ละ Tier ของ Quest (ครบหลอดจะเลื่อน Tier อัตโนมัติ)</div>
+      <div class="small">กำหนด “ชื่อ, จำนวนหลอด, เงื่อนไข” ของแต่ละ Tier</div>
       <div id="qsRows"></div>
     </div>
     <footer>
       <button class="btn ghost" id="qsCancel">ยกเลิก</button>
-      <button class="btn success" id="qsCreate">เพิ่ม Quest</button>
+      <button class="btn success" id="qsCreate">บันทึก Quest</button>
     </footer>
   </div>
 </div>
 
 <script>
-/* ===== Storage & helpers ===== */
-const DB_KEY='psd_v3_tier';
+/* ========= Storage & helpers ========= */
+const DB_KEY='psd_v3_2_tier_polish';
 const nowISO=()=>new Date().toISOString();
 const uid = ()=>'id'+Math.random().toString(36).slice(2,10);
-const loadDB = ()=>{ try{const r=localStorage.getItem(DB_KEY); return r?JSON.parse(r):{version:3,topics:[]};}catch(e){return {version:3,topics:[]};} }
+const loadDB = ()=>{ try{const r=localStorage.getItem(DB_KEY); return r?JSON.parse(r):{version:3.2,topics:[]};}catch(e){return {version:3.2,topics:[]};} }
 const saveDB = db => localStorage.setItem(DB_KEY, JSON.stringify(db));
 let db=loadDB();
 
@@ -247,22 +259,20 @@ function ensureSub(s){
   s.tierConfig ||= {tiers:[{name:'Tier 1',units:5,img:''}]};
   s.tierIndex = Math.max(0, Number(s.tierIndex||0));
   s.quests ||= [];
-  s.logs ||= []; // {time,type,detail}
-  s.qProgressPolicy ||= 'average'; // ไว้เผื่อปรับสูตรในอนาคต
+  s.logs ||= [];
   return s;
 }
 function ensureQuest(q){
-  q.tierConfig ||= {tiers:[{name:'T1',units:5},{name:'T2',units:5},{name:'T3',units:5}]};
+  q.tierConfig ||= {tiers:[{name:'T1',units:5,cond:''}]};
+  q.tierConfig.tiers = (q.tierConfig.tiers||[]).map(t=>({name:t.name||'T',units:t.units||5,cond:t.cond||''}));
   q.tierIndex = Math.max(0, Number(q.tierIndex||0));
-  q.progress = Math.max(0, Number(q.progress||0)); // หน่วยที่สะสมใน tier ปัจจุบัน
+  q.progress = Math.max(0, Number(q.progress||0));
   return q;
 }
-
 function byId(id){ return document.getElementById(id); }
-function formatPct(v){ return Math.round(v*100); }
 function download(filename,text){ const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([text],{type:'text/plain'})); a.download=filename; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),1000); }
 
-/* ====== Radar kept simple from previous versions ====== */
+/* ========= Radar (คงเดิมแบบย่อ) ========= */
 function drawRadarOn(canvasId, labels, percents, subtitle){
   const cvs=document.getElementById(canvasId); if(!cvs) return;
   const ctx=cvs.getContext('2d');
@@ -271,30 +281,30 @@ function drawRadarOn(canvasId, labels, percents, subtitle){
   const DPR=Math.max(1,window.devicePixelRatio||1);
   cvs.width=cssW*DPR; cvs.height=cssH*DPR; cvs.style.height=cssH+'px';
   ctx.setTransform(DPR,0,0,DPR,0,0); ctx.clearRect(0,0,cssW,cssH);
-  if(!labels.length){ ctx.fillStyle='#6b7280'; ctx.font='16px system-ui'; ctx.textAlign='center'; ctx.fillText('ยังไม่มีหัวข้อหลัก — กด “เพิ่มหัวข้อหลัก”', cssW/2, cssH/2); return; }
+  if(!labels.length){ ctx.fillStyle='#6b7280'; ctx.font='16px system-ui'; ctx.textAlign='center'; ctx.fillText('ยังไม่มีหัวข้อหลัก', cssW/2, cssH/2); return; }
   const N=labels.length, vals=percents.map(v=>Math.max(0,Math.min(100,v))), cx=cssW/2, cy=cssH/2+6, maxR=Math.min(cssW,cssH)*0.36, steps=5;
   ctx.lineWidth=1;
   for(let s=1;s<=steps;s++){ const r=(s/steps)*maxR; ctx.beginPath(); for(let i=0;i<N;i++){ const a=(i/N)*Math.PI*2 - Math.PI/2; const x=cx+r*Math.cos(a),y=cy+r*Math.sin(a); i?ctx.lineTo(x,y):ctx.moveTo(x,y);} ctx.closePath(); ctx.strokeStyle='#e5e7eb'; ctx.stroke(); }
   ctx.font='12px system-ui'; ctx.fillStyle='#0f1220'; ctx.textAlign='center'; ctx.textBaseline='middle';
   for(let i=0;i<N;i++){ const a2=(i/N)*Math.PI*2-Math.PI/2; const x2=cx+maxR*Math.cos(a2), y2=cy+maxR*Math.sin(a2); ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(x2,y2); ctx.strokeStyle='#e5e7eb'; ctx.stroke(); const lx=cx+(maxR+16)*Math.cos(a2), ly=cy+(maxR+16)*Math.sin(a2); ctx.fillText(labels[i], lx, ly); }
-  const pts=vals.map((v,i)=>{ const a=(i/N)*Math.PI*2-Math.PI/2, r=(v/100)*maxR; return {x:cx+r*Math.cos(a),y:cy+r*Math.sin(a)};});
+  const pts=vals.map((v,i)=>{ const a=(i/N)*Math.PI*2-Math.PI/2, r=(v/100)*maxR; return {x:cx+r*Math.cos(a),y=cy+r*Math.sin(a)};});
   ctx.beginPath(); pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y)); ctx.closePath();
   ctx.fillStyle='rgba(37,99,235,.18)'; ctx.strokeStyle='#2563eb'; ctx.lineWidth=2; ctx.fill(); ctx.stroke();
   ctx.fillStyle='#2563eb'; pts.forEach(p=>{ ctx.beginPath(); ctx.arc(p.x,p.y,3,0,Math.PI*2); ctx.fill(); });
   if(subtitle){ ctx.fillStyle='#6b7280'; ctx.font='12px system-ui'; ctx.textAlign='left'; ctx.fillText(subtitle,12,16); }
 }
 
-/* ===== App state & DOM refs ===== */
+/* ========= Refs ========= */
 const homeView=byId('homeView'), mainView=byId('mainView'), subView=byId('subView');
 const topicsList=byId('topicsList'), subsList=byId('subsList');
 const backHomeBtn=byId('backHomeBtn'), backMainBtn=byId('backMainBtn');
 const mainTitle=byId('mainTitle'), mainSummary=byId('mainSummary'), deleteMainBtn=byId('deleteMainBtn');
 const subTitle=byId('subTitle'), subLive=byId('subLive'), deleteSubBtn=byId('deleteSubBtn');
 
+const tierHead=byId('tierHead'), tierLeftCol=byId('tierLeftCol'), tierRightCol=byId('tierRightCol');
 const tierLeftImg=byId('tierLeftImg'), tierRightImg=byId('tierRightImg');
 const tierBadge=byId('tierBadge'), tierPercent=byId('tierPercent');
-const subProgressBar=byId('subProgressBar'), subTicks=byId('subTicks');
-
+const subSegbar=byId('subSegbar');
 const historyTableBody=document.querySelector('#historyTable tbody');
 const exportCsvBtn=byId('exportCsvBtn');
 const addSubBtn=byId('addSubBtn'), addQuestBtn=byId('addQuestBtn');
@@ -314,30 +324,54 @@ byId('qsCreate').onclick=createQuestFromSetup;
 
 let currentMainId=null, currentSubId=null;
 
-/* ===== Home ===== */
+/* ========= UI helpers ========= */
+function topicProgressPercent(t){
+  if(!t.subs?.length) return 0;
+  const vals=t.subs.map(s=>{ s=ensureSub(s); return ((s.tierIndex+1)/s.tierConfig.tiers.length)*100; });
+  return Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);
+}
+function tierStyleByIndex(idx){ if(idx>=2) return 'dia'; if(idx===1) return 'gold'; return ''; }
+
+/* create segmented bar into container */
+function buildSegBar(container, segments, filledUnits, styleCls){
+  container.className = 'segbar '+(styleCls||'');
+  container.innerHTML='';
+  const full = Math.floor(filledUnits);
+  const frac = Math.max(0,Math.min(1, filledUnits - full));
+  for(let i=0;i<segments;i++){
+    const seg=document.createElement('div'); seg.className='seg';
+    const fill=document.createElement('div'); fill.className='fill';
+    const gloss=document.createElement('div'); gloss.className='gloss';
+    if(i<full) fill.style.width='100%';
+    else if(i===full) fill.style.width=(frac*100)+'%';
+    seg.appendChild(fill); seg.appendChild(gloss);
+    container.appendChild(seg);
+  }
+}
+
+/* ========= Home ========= */
 function renderHome(){
   homeView.style.display='grid'; mainView.style.display='none'; subView.style.display='none';
   topicsList.innerHTML='';
   if(!db.topics.length){
-    const card=document.createElement('div'); card.className='card'; card.innerHTML='<div class="small">ยังไม่มีหัวข้อหลัก กด “เพิ่มหัวข้อหลัก” ด้านบน</div>'; topicsList.appendChild(card);
+    const card=document.createElement('div'); card.className='card'; card.innerHTML='<div class="small">ยังไม่มีหัวข้อหลัก</div>'; topicsList.appendChild(card);
   }else{
     db.topics.forEach(t=>{
       ensureMain(t);
-      // เปอร์เซ็นต์ของหัวข้อหลัก = เฉลี่ยเปอร์เซ็นต์จากหัวข้อย่อย (โดยใช้สัดส่วน tierIndex / รวม tier)
-      const perc = (t.subs||[]).length ? Math.round( (t.subs.map(s=> ( (ensureSub(s).tierIndex+1) / s.tierConfig.tiers.length )*100 ).reduce((a,b)=>a+b,0)) / t.subs.length ) : 0;
+      const p = topicProgressPercent(t);
       const card=document.createElement('div'); card.className='card topic';
       card.innerHTML=`
         <div class="topic-name">${t.name||'หัวข้อหลัก'}</div>
-        <div class="bar" style="flex:1"><span style="width:${perc}%"></span></div>
-        <div class="small" style="width:160px;text-align:right">${perc}% • ${t.subs.length} ย่อย</div>`;
+        <div class="listbar"><span style="width:${p}%"></span></div>
+        <div class="small" style="width:160px;text-align:right">${p}% • ${t.subs.length} ย่อย</div>`;
       card.onclick=()=>openMain(t.id);
       topicsList.appendChild(card);
     });
   }
-  drawRadarOn('radarCanvas', db.topics.map(t=>t.name||''), db.topics.map(t=>(t.subs||[]).length?Math.round((t.subs.map(s=>((ensureSub(s).tierIndex+1)/s.tierConfig.tiers.length)*100).reduce((a,b)=>a+b,0))/t.subs.length):0), 'ภาพรวมแบบง่าย');
+  drawRadarOn('radarCanvas', db.topics.map(t=>t.name||''), db.topics.map(topicProgressPercent), 'ภาพรวมแบบง่าย');
 }
 
-/* ===== Main ===== */
+/* ========= Main ========= */
 function openMain(id){
   currentMainId=id; currentSubId=null;
   const main=db.topics.find(t=>t.id===id); ensureMain(main);
@@ -350,25 +384,23 @@ function openMain(id){
     ensureSub(sub);
     const tierNow=sub.tierConfig.tiers[sub.tierIndex]||{name:'—'};
     const totalTier=sub.tierConfig.tiers.length;
+    const p = Math.round(((sub.tierIndex+1)/totalTier)*100);
     const el=document.createElement('div'); el.className='card topic';
     el.innerHTML=`
       <div class="topic-name"><span style="font-weight:700">${sub.name}</span> <span class="tag">Tier ${sub.tierIndex+1}/${totalTier} • ${tierNow.name||''}</span></div>
-      <div class="bar" style="flex:1"><span style="width:${((sub.tierIndex+1)/totalTier)*100}%"></span></div>
+      <div class="listbar"><span style="width:${p}%"></span></div>
       <div class="small" style="width:120px;text-align:right">${sub.quests.length} quests</div>`;
     el.onclick=()=>openSub(sub.id);
     subsList.appendChild(el);
   });
 
-  drawRadarOn('topicRadarCanvas', main.subs.map(s=>s.name), main.subs.map(s=>((s.tierIndex+1)/s.tierConfig.tiers.length)*100), 'ความก้าวหน้าแบบหยาบ (ตำแหน่ง Tier)');
+  drawRadarOn('topicRadarCanvas', main.subs.map(s=>s.name), main.subs.map(s=>((s.tierIndex+1)/s.tierConfig.tiers.length)*100), 'ความก้าวหน้าแบบหยาบ');
 }
 backHomeBtn.onclick=()=>{ currentMainId=null; renderHome(); };
 addSubBtn.onclick=()=>openSubSetup();
-deleteMainBtn.onclick=()=>{
-  if(!confirm('ลบหัวข้อหลักนี้และทั้งหมดภายใน?')) return;
-  db.topics = db.topics.filter(t=>t.id!==currentMainId); saveDB(db); currentMainId=null; renderHome();
-};
+byId('deleteMainBtn').onclick=()=>{ if(!confirm('ลบหัวข้อหลักนี้และทั้งหมดภายใน?')) return; db.topics = db.topics.filter(t=>t.id!==currentMainId); saveDB(db); currentMainId=null; renderHome(); };
 
-/* ===== Sub (Tier System) ===== */
+/* ========= Sub ========= */
 function openSub(subId){
   currentSubId=subId;
   const main=db.topics.find(t=>t.id===currentMainId);
@@ -381,26 +413,22 @@ function openSub(subId){
 }
 backMainBtn.onclick=()=>openMain(currentMainId);
 
-function questTierStyle(idx){
-  if(idx>=2) return 'dia';
-  if(idx===1) return 'gold';
-  return '';
-}
-
 function updateSubHeader(){
   const main=db.topics.find(t=>t.id===currentMainId);
   const sub=ensureSub(main.subs.find(s=>s.id===currentSubId));
-  const tiers=sub.tierConfig.tiers;
-  const i=sub.tierIndex;
-  const cur=tiers[i];
-  const next=tiers[i+1];
+  const tiers=sub.tierConfig.tiers; const i=sub.tierIndex;
+  const cur=tiers[i]; const next=tiers[i+1];
+
+  // Layout & images
+  tierHead.classList.toggle('centered', !next);
+  tierLeftCol.classList.toggle('center', !next);
+  tierRightCol.style.display = next? 'block':'none';
   tierLeftImg.src = (cur&&cur.img)||'';
   tierRightImg.src = (next&&next.img)||'';
-  byId('tierLeftTitle').textContent = 'Tier ปัจจุบัน';
   byId('tierRightTitle').textContent = next? 'Tier ถัดไป':'ถึง Tier สูงสุดแล้ว';
   tierBadge.textContent = `Tier ${i+1} / ${tiers.length}${cur&&cur.name?' • '+cur.name:''}`;
 
-  // ความคืบหน้ารวม = ค่าเฉลี่ยของทุก quest (progress / units ปัจจุบัน)
+  // Progress from quests
   const quests = sub.quests.map(ensureQuest);
   let avg = 0;
   if(quests.length){
@@ -409,27 +437,24 @@ function updateSubHeader(){
       return Math.max(0, Math.min(1, (q.progress)/(t.units||1) ));
     }).reduce((a,b)=>a+b,0)/quests.length;
   }
-  const pct = Math.max(0,Math.min(1,avg));
-  tierPercent.textContent = formatPct(pct)+'%';
-  subProgressBar.className='bar '+questTierStyle(sub.tierIndex);
-  subProgressBar.querySelector('span').style.width = (pct*100)+'%';
-  subTicks.innerHTML='';
-  const unit = (cur&&cur.units)||1;
-  for(let j=1;j<unit;j++){
-    const dv=document.createElement('div'); dv.className='tick'; dv.style.left=(j*100/unit)+'%'; subTicks.appendChild(dv);
-  }
+  const unitNeed = (cur&&cur.units)||1;
+  const filledUnits = avg*unitNeed;
+  tierPercent.textContent = Math.round(avg*100)+'%';
+
+  // pretty segmented bar
+  buildSegBar(subSegbar, unitNeed, filledUnits, tierStyleByIndex(i));
+
   subLive.textContent = `ค่า ณ ปัจจุบัน: Tier ${sub.tierIndex+1}/${tiers.length}`;
   saveDB(db);
 }
 
+/* Level up sub when ready */
 function levelUpSubIfReady(){
   const main=db.topics.find(t=>t.id===currentMainId);
   const sub=ensureSub(main.subs.find(s=>s.id===currentSubId));
-  const tiers=sub.tierConfig.tiers;
-  const i=sub.tierIndex;
-  if(i>=tiers.length-1) return; // max tier
+  const tiers=sub.tierConfig.tiers; const i=sub.tierIndex;
+  if(i>=tiers.length-1) return;
 
-  // เช็คค่าเฉลี่ยตาม updateSubHeader อีกครั้ง
   const quests = sub.quests.map(ensureQuest);
   let avg = 0;
   if(quests.length){
@@ -438,22 +463,17 @@ function levelUpSubIfReady(){
       return Math.max(0, Math.min(1, (q.progress)/(t.units||1) ));
     }).reduce((a,b)=>a+b,0)/quests.length;
   }
-  const unitNeed = (tiers[i]&&tiers[i].units)||1;
-  const filledUnits = avg*unitNeed;
-  if(filledUnits>=unitNeed-1e-9){
+  const need=(tiers[i]&&tiers[i].units)||1;
+  if(avg*need>=need-1e-9){
     sub.tierIndex++;
     sub.logs.push({time:nowISO(),type:'SUB_TIER_UP',detail:`เลื่อนเป็น Tier ${sub.tierIndex+1} • ${tiers[sub.tierIndex].name||''}`});
-    // รีเซ็ตความคืบหน้าของทุก quest ให้เริ่มนับรอบใหม่ (แต่ไม่เปลี่ยน tier ของ quest)
     sub.quests.forEach(q=>{ q.progress = 0; });
     alert(`ยินดีด้วย! "${sub.name}" เลื่อนเป็น Tier ${sub.tierIndex+1}`);
-    saveDB(db);
-    updateSubHeader();
-    renderQuests();
-    renderHistory();
+    saveDB(db); updateSubHeader(); renderQuests(); renderHistory();
   }
 }
 
-/* ===== Quests ===== */
+/* ========= Quests ========= */
 function renderQuests(){
   const main=db.topics.find(t=>t.id===currentMainId);
   const sub=ensureSub(main.subs.find(s=>s.id===currentSubId));
@@ -465,45 +485,43 @@ function renderQuests(){
 
   sub.quests.forEach(q=>{
     ensureQuest(q);
-    const tNow=q.tierConfig.tiers[q.tierIndex]||{name:'',units:1};
-    const row=document.createElement('div'); row.className='quest-row';
-    const cls=questTierStyle(q.tierIndex);
+    const tNow=q.tierConfig.tiers[q.tierIndex]||{name:'',units:1,cond:''};
+    const row=document.createElement('div'); row.className='quest-row quest-card fade-in';
+
+    const progressHolder=document.createElement('div'); // ที่วาง segbar
+    const styleCls=tierStyleByIndex(q.tierIndex);
+    buildSegBar(progressHolder, tNow.units||1, q.progress||0, styleCls);
+
     row.innerHTML=`
       <div>
         <div class="quest-title">${q.title}<span class="tag">T${q.tierIndex+1}/${q.tierConfig.tiers.length} • ${tNow.name}</span></div>
+        <div class="small cond">${tNow.cond?('เงื่อนไข: '+tNow.cond):''}</div>
         <div class="small">หน่วยที่ต้องใช้ใน Tier นี้: ${tNow.units}</div>
       </div>
-      <div>
-        <div class="bar ${cls}" style="height:14px"><span style="width:${Math.min(100,(q.progress/(tNow.units||1))*100)}%"></span><div class="ticks"></div></div>
-      </div>
+      <div></div>
       <div class="row" style="justify-content:flex-end">
         <button class="btn success">เพิ่ม +</button>
         <button class="btn danger">ลด −</button>
         <button class="btn secondary">แก้ไข</button>
         <button class="btn ghost">ลบ</button>
       </div>`;
-    // ticks
-    const ticks=row.querySelector('.ticks'); ticks.innerHTML='';
-    for(let j=1;j<tNow.units;j++){ const dv=document.createElement('div'); dv.className='tick'; dv.style.left=(j*100/tNow.units)+'%'; ticks.appendChild(dv); }
+    row.children[1].appendChild(progressHolder);
 
     const [bPlus,bMinus,bEdit,bDel]=row.querySelectorAll('button');
     bPlus.onclick=()=>{
-      if(q.tierIndex>=q.tierConfig.tiers.length-1 && q.progress>=tNow.units) return;
+      if(q.tierIndex>=q.tierConfig.tiers.length-1 && q.progress>=tNow.units){ return; }
       q.progress++;
       if(q.progress>=tNow.units){
         if(q.tierIndex<q.tierConfig.tiers.length-1){
           q.tierIndex++; q.progress=0;
           sub.logs.push({time:nowISO(),type:'QUEST_TIER_UP',detail:`${q.title} → T${q.tierIndex+1}`});
         }else{
-          q.progress=tNow.units; // maxed
+          q.progress=tNow.units;
         }
       }
       saveDB(db); updateSubHeader(); renderQuests(); levelUpSubIfReady();
     };
-    bMinus.onclick=()=>{
-      q.progress=Math.max(0, q.progress-1);
-      saveDB(db); updateSubHeader(); renderQuests();
-    };
+    bMinus.onclick=()=>{ q.progress=Math.max(0, q.progress-1); saveDB(db); updateSubHeader(); renderQuests(); };
     bEdit.onclick=()=>openQuestSetup(q);
     bDel.onclick=()=>{ if(!confirm('ลบ Quest นี้?')) return; sub.quests=sub.quests.filter(x=>x.id!==q.id); saveDB(db); renderQuests(); updateSubHeader(); };
 
@@ -513,7 +531,7 @@ function renderQuests(){
 
 addQuestBtn.onclick=()=>openQuestSetup();
 
-/* ===== History ===== */
+/* ========= History ========= */
 function renderHistory(){
   const main=db.topics.find(t=>t.id===currentMainId);
   const sub=ensureSub(main.subs.find(s=>s.id===currentSubId));
@@ -525,7 +543,7 @@ function renderHistory(){
     historyTableBody.appendChild(tr);
   });
 }
-exportCsvBtn.onclick=()=>{
+byId('exportCsvBtn').onclick=()=>{
   const main=db.topics.find(t=>t.id===currentMainId);
   const sub=ensureSub(main.subs.find(s=>s.id===currentSubId));
   const rows=[['time','type','detail'],...(sub.logs||[]).map(r=>[r.time,r.type||'',r.detail||''])];
@@ -539,12 +557,9 @@ deleteSubBtn.onclick=()=>{
   main.subs=main.subs.filter(s=>s.id!==currentSubId); saveDB(db); openMain(currentMainId);
 };
 
-/* ====== Sub Setup Modal (create) ====== */
+/* ========= Sub Setup ========= */
 function openSubSetup(){
-  ssName.value='';
-  ssCount.value=3;
-  buildSubSetupRows();
-  subSetupModal.style.display='flex';
+  ssName.value=''; ssCount.value=3; buildSubSetupRows(); subSetupModal.style.display='flex';
 }
 ssCount.oninput=buildSubSetupRows;
 
@@ -559,7 +574,7 @@ function buildSubSetupRows(){
         <input type="file" accept="image/*" id="ssFile_${i}" style="margin-top:6px">
       </div>
       <div><label>ชื่อ Tier</label><input type="text" id="ssTitle_${i}" value="${i===0?'Beginner':('Tier '+(i+1))}"></div>
-      <div><label>จำนวนหลอดที่ต้องใช้</label><input type="number" id="ssUnits_${i}" min="1" step="1" value="${ i===0?5:5 }"></div>
+      <div><label>จำนวนหลอดที่ต้องใช้</label><input type="number" id="ssUnits_${i}" min="1" step="1" value="5"></div>
       <div style="text-align:right"><span class="pill">T${i+1}</span></div>`;
     ssRows.appendChild(row);
     const file=byId(`ssFile_${i}`), img=byId(`ssImg_${i}`);
@@ -576,14 +591,14 @@ function createSubFromSetup(){
     const tName=byId(`ssTitle_${i}`).value||('Tier '+(i+1));
     const units=Math.max(1,Number(byId(`ssUnits_${i}`).value||1));
     const img=byId(`ssImg_${i}`).src||'';
-    tiers.push({name:tName,units, img});
+    tiers.push({name:tName,units,img});
   }
   const sub={id:uid(),name, tierConfig:{tiers}, tierIndex:0, quests:[], logs:[]};
   const main=db.topics.find(t=>t.id===currentMainId);
   main.subs.push(sub); saveDB(db); subSetupModal.style.display='none'; openSub(sub.id);
 }
 
-/* ====== Quest Setup Modal ====== */
+/* ========= Quest Setup ========= */
 function openQuestSetup(editing){
   questSetupModal.style.display='flex';
   if(editing){
@@ -601,16 +616,17 @@ qsCount.oninput=()=>buildQuestRows();
 function buildQuestRows(editing){
   const n=Math.max(1,Number(qsCount.value||1));
   qsRows.innerHTML='';
-  const tiers = editing? editing.tierConfig.tiers : null;
+  const tiers = editing? ensureQuest(editing).tierConfig.tiers : null;
   for(let i=0;i<n;i++){
     const units = tiers && tiers[i] ? tiers[i].units : 5;
     const name = tiers && tiers[i] ? tiers[i].name : ('T'+(i+1));
+    const cond = tiers && tiers[i] ? (tiers[i].cond||'') : '';
     const row=document.createElement('div'); row.className='tier-row';
     row.innerHTML = `
       <div style="text-align:center"><span class="pill">T${i+1}</span></div>
       <div><label>ชื่อ Tier</label><input type="text" id="qsTitle_${i}" value="${name}"></div>
       <div><label>จำนวนหลอดที่ใช้</label><input type="number" id="qsUnits_${i}" min="1" step="1" value="${units}"></div>
-      <div></div>`;
+      <div><label>เงื่อนไขของ Tier นี้</label><input type="text" id="qsCond_${i}" placeholder="ตัวอย่าง: ทำครบ 5 วัน/สัปดาห์" value="${cond}"></div>`;
     qsRows.appendChild(row);
   }
 }
@@ -621,7 +637,8 @@ function createQuestFromSetup(){
   for(let i=0;i<n;i++){
     const name=byId(`qsTitle_${i}`).value||('T'+(i+1));
     const units=Math.max(1,Number(byId(`qsUnits_${i}`).value||1));
-    tiers.push({name,units});
+    const cond=(byId(`qsCond_${i}`).value||'').trim();
+    tiers.push({name,units,cond});
   }
   const main=db.topics.find(t=>t.id===currentMainId);
   const sub=ensureSub(main.subs.find(s=>s.id===currentSubId));
@@ -636,18 +653,15 @@ function createQuestFromSetup(){
   saveDB(db); questSetupModal.style.display='none'; renderQuests(); updateSubHeader();
 }
 
-/* ===== Add / Export / Boot ===== */
-byId('addTopicBtn').onclick=()=>{
-  const name=prompt('ชื่อหัวข้อหลัก'); if(!name) return;
-  db.topics.push({id:uid(),name:name.trim(),subs:[]}); saveDB(db); renderHome();
-};
-byId('exportAllBtn').onclick=()=>download('progress_backup_tier.json', JSON.stringify(db,null,2));
+/* ========= Add / Export / Boot ========= */
+byId('addTopicBtn').onclick=()=>{ const name=prompt('ชื่อหัวข้อหลัก'); if(!name) return; db.topics.push({id:uid(),name:name.trim(),subs:[]}); saveDB(db); renderHome(); };
+byId('exportAllBtn').onclick=()=>download('progress_backup_tier_polish.json', JSON.stringify(db,null,2));
 
 function start(){
   db.topics.forEach(ensureMain);
   renderHome();
   window.addEventListener('resize', ()=>{
-    drawRadarOn('radarCanvas', db.topics.map(t=>t.name||''), db.topics.map(t=>(t.subs||[]).length?Math.round((t.subs.map(s=>((ensureSub(s).tierIndex+1)/s.tierConfig.tiers.length)*100).reduce((a,b)=>a+b,0))/t.subs.length):0), 'ภาพรวมแบบง่าย');
+    drawRadarOn('radarCanvas', db.topics.map(t=>t.name||''), db.topics.map(topicProgressPercent), 'ภาพรวมแบบง่าย');
     if(currentMainId){
       const m=db.topics.find(t=>t.id===currentMainId)||{subs:[]};
       drawRadarOn('topicRadarCanvas', m.subs.map(s=>s.name), m.subs.map(s=>((ensureSub(s).tierIndex+1)/ensureSub(s).tierConfig.tiers.length)*100), 'ความก้าวหน้าแบบหยาบ');
