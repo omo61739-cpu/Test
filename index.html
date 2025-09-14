@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Progressive Self-Development • Tier System (Polish UI)</title>
+<title>Progressive Self-Development • Tier System (Compat)</title>
 <style>
   :root{
     --bg:#f5f7fb;--card:#ffffff;--ink:#0f1220;--muted:#6b7280;
@@ -35,48 +35,33 @@
   .tag{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid var(--border);font-size:12px;background:#fff;margin-left:6px}
   .right{margin-left:auto}
   .wrap{display:flex;gap:12px;flex-wrap:wrap}
-
-  /* ======= Radar ======= */
   #radarCard canvas,#topicRadarCard canvas{display:block;width:100%;max-width:720px;margin:auto;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--ring)}
-
-  /* ======= Tier Header ======= */
   .tier-head{display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:16px;align-items:center}
   .tier-head.centered{grid-template-columns:1fr 1fr}
   .tier-col.center{grid-column:1 / span 2;text-align:center}
   .tier-title{font-weight:700}
   .tier-img{display:inline-block;border:1px solid var(--border);border-radius:16px;background:#fff;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.06)}
   .tier-img img{display:block;max-width:100%;height:auto}
-
-  /* ======= Pretty segmented bars ======= */
   .segbar{display:flex;gap:8px;align-items:center}
   .segbar .seg{flex:1;height:14px;border-radius:999px;position:relative;overflow:hidden;border:1px solid #dce3f2;background:linear-gradient(180deg,#eef2f7,#e8edf6);box-shadow:inset 0 1px 2px rgba(0,0,0,.06)}
   .segbar .fill{position:absolute;inset:0;right:auto;width:0;transition:width .45s cubic-bezier(.2,.8,.2,1);background:linear-gradient(90deg,#7bb0ff,#3b82f6);}
   .segbar .gloss{position:absolute;inset:auto 0 0 0;height:40%;background:linear-gradient(180deg,rgba(255,255,255,.7),rgba(255,255,255,0));pointer-events:none}
-  /* Gold */
   .segbar.gold .seg{border-color:#f1e2a8;background:linear-gradient(180deg,#fff7d5,#fdecb3)}
   .segbar.gold .fill{background:linear-gradient(90deg,var(--gold-2),var(--gold))}
-  /* Diamond */
   .segbar.dia .seg{border-color:#cbefff;background:linear-gradient(180deg,#eefcff,#dff6ff)}
   .segbar.dia .fill{background:linear-gradient(90deg,var(--dia-2),var(--dia))}
-  /* tiny marker caps when segmentsเยอะ */
   .segbar .seg::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.45)}
   .seg-label{display:flex;justify-content:space-between;align-items:center}
-
-  /* ======= List topic bar (home/main) ======= */
   .topic{display:flex;gap:12px;align-items:center}
   .topic-name{flex:0 0 260px;font-weight:600}
   .listbar{position:relative;flex:1;height:12px;background:#eef3fb;border:1px solid var(--border);border-radius:999px;overflow:hidden}
   .listbar>span{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,#9cc1ff,#2563eb);transition:width .4s}
-
-  /* ======= Quest row ======= */
   .quest-row{display:grid;grid-template-columns:1fr 360px 230px;gap:14px;align-items:center}
   .quest-title{font-weight:700}
   .cond{margin-top:4px}
   .quest-card{border:1px solid var(--border);border-radius:14px;padding:12px;background:#fff}
   .quest-row .btn{padding:9px 12px}
   @media (max-width:900px){ .quest-row{grid-template-columns:1fr} }
-
-  /* ======= Modal ======= */
   .modal{position:fixed;inset:0;background:rgba(15,18,32,.45);display:none;align-items:center;justify-content:center;padding:14px;z-index:50}
   .dialog{width:min(980px,calc(100% - 24px));max-height:90vh;overflow:auto;background:#fff;border:1px solid var(--border);border-radius:18px;box-shadow:0 26px 70px rgba(0,0,0,.18)}
   .dialog header{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border)}
@@ -84,8 +69,6 @@
   .dialog footer{display:flex;gap:10px;justify-content:flex-end;padding:12px 16px;border-top:1px solid var(--border);background:#fafafa}
   .tier-row{display:grid;grid-template-columns:140px 1fr 140px 230px;gap:12px;align-items:center;margin-bottom:10px}
   .img-thumb{width:100%;height:auto;max-height:92px;object-fit:cover;border:1px solid var(--border);border-radius:12px;background:#f2f2f2}
-
-  /* tiny helpers */
   .fade-in{animation:fade .25s ease}
   @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 </style>
@@ -97,7 +80,7 @@
     <div class="wrap">
       <button class="btn" id="addTopicBtn">เพิ่มหัวข้อหลัก</button>
       <button class="btn secondary" id="exportAllBtn">ส่งออกข้อมูลทั้งหมด</button>
-      <span class="pill">v3.2 • Local (Polished)</span>
+      <span class="pill">v3.2 • Local (Compat)</span>
     </div>
   </header>
 
@@ -106,13 +89,11 @@
     <canvas id="radarCanvas" height="140"></canvas>
   </div>
 
-  <!-- HOME -->
   <section id="homeView" class="grid">
     <div class="card"><div class="small">แตะหัวข้อหลักเพื่อจัดการหัวข้อย่อย</div></div>
     <div id="topicsList" class="grid"></div>
   </section>
 
-  <!-- MAIN -->
   <section id="mainView" class="grid" style="display:none">
     <div class="card">
       <div class="row">
@@ -137,7 +118,6 @@
     </div>
   </section>
 
-  <!-- SUB -->
   <section id="subView" class="grid" style="display:none">
     <div class="card">
       <div class="row">
@@ -147,13 +127,11 @@
       </div>
       <div class="spacer"></div>
 
-      <!-- Tier header -->
       <div class="tier-head" id="tierHead">
         <div class="tier-col" id="tierLeftCol">
           <div class="small tier-title">Tier ปัจจุบัน</div>
           <div class="tier-img"><img id="tierLeftImg" alt=""></div>
         </div>
-
         <div id="tierMetaCol">
           <div class="row">
             <div class="small">สถานะภาพรวมของหัวข้อย่อยนี้</div>
@@ -163,7 +141,6 @@
           <div id="subSegbar" class="segbar"></div>
           <div class="small">* หลอดรวมเต็มแล้วจะเลื่อนไป Tier ถัดไป และรีเซ็ตหลอดใหม่</div>
         </div>
-
         <div class="tier-col" id="tierRightCol">
           <div class="small tier-title" id="tierRightTitle">Tier ถัดไป</div>
           <div class="tier-img"><img id="tierRightImg" alt=""></div>
@@ -171,7 +148,6 @@
       </div>
     </div>
 
-    <!-- Quests -->
     <div class="card">
       <div class="row" style="align-items:center">
         <h3 style="margin:0">Quests</h3>
@@ -180,7 +156,6 @@
       <div id="questsList" class="grid" style="margin-top:8px"></div>
     </div>
 
-    <!-- History -->
     <div class="card">
       <div class="row" style="align-items:center">
         <h3 style="margin:0">ประวัติ</h3>
@@ -198,7 +173,7 @@
   </section>
 </div>
 
-<!-- ====== Sub Setup Modal ====== -->
+<!-- Sub Setup Modal -->
 <div id="subSetupModal" class="modal">
   <div class="dialog fade-in">
     <header>
@@ -222,7 +197,7 @@
   </div>
 </div>
 
-<!-- ====== Quest Setup Modal ====== -->
+<!-- Quest Setup Modal -->
 <div id="questSetupModal" class="modal">
   <div class="dialog fade-in">
     <header>
@@ -246,102 +221,101 @@
 </div>
 
 <script>
-/* ========= Storage & helpers ========= */
-const DB_KEY='psd_v3_2_tier_polish';
-const nowISO=()=>new Date().toISOString();
-const uid = ()=>'id'+Math.random().toString(36).slice(2,10);
-const loadDB = ()=>{ try{const r=localStorage.getItem(DB_KEY); return r?JSON.parse(r):{version:3.2,topics:[]};}catch(e){return {version:3.2,topics:[]};} }
-const saveDB = db => localStorage.setItem(DB_KEY, JSON.stringify(db));
-let db=loadDB();
+/* ===== Storage & helpers (compat) ===== */
+var DB_KEY='psd_v3_2_tier_polish';
+function nowISO(){return new Date().toISOString();}
+function uid(){return 'id'+Math.random().toString(36).slice(2,10);}
+function loadDB(){try{var r=localStorage.getItem(DB_KEY);return r?JSON.parse(r):{version:3.2,topics:[]};}catch(e){return {version:3.2,topics:[]};}}
+function saveDB(db){localStorage.setItem(DB_KEY, JSON.stringify(db));}
+var db=loadDB();
 
-function ensureMain(t){ t.subs ||= []; return t; }
+function ensureMain(t){ if(!t.subs) t.subs=[]; return t; }
 function ensureSub(s){
-  s.tierConfig ||= {tiers:[{name:'Tier 1',units:5,img:''}]};
+  if(!s.tierConfig) s.tierConfig={tiers:[{name:'Tier 1',units:5,img:''}]};
   s.tierIndex = Math.max(0, Number(s.tierIndex||0));
-  s.quests ||= [];
-  s.logs ||= [];
+  if(!s.quests) s.quests=[];
+  if(!s.logs) s.logs=[];
   return s;
 }
 function ensureQuest(q){
-  q.tierConfig ||= {tiers:[{name:'T1',units:5,cond:''}]};
-  q.tierConfig.tiers = (q.tierConfig.tiers||[]).map(t=>({name:t.name||'T',units:t.units||5,cond:t.cond||''}));
-  q.tierIndex = Math.max(0, Number(q.tierIndex||0));
-  q.progress = Math.max(0, Number(q.progress||0));
+  if(!q.tierConfig) q.tierConfig={tiers:[{name:'T1',units:5,cond:''}]};
+  q.tierConfig.tiers=(q.tierConfig.tiers||[]).map(function(t){return {name:t.name||'T',units:t.units||5,cond:t.cond||''}});
+  q.tierIndex=Math.max(0,Number(q.tierIndex||0));
+  q.progress=Math.max(0,Number(q.progress||0));
   return q;
 }
-function byId(id){ return document.getElementById(id); }
-function download(filename,text){ const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([text],{type:'text/plain'})); a.download=filename; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),1000); }
+function byId(id){return document.getElementById(id);}
+function download(filename,text){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/plain'}));a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},1000);}
 
-/* ========= Radar (คงเดิมแบบย่อ) ========= */
+/* ===== Radar (same) ===== */
 function drawRadarOn(canvasId, labels, percents, subtitle){
-  const cvs=document.getElementById(canvasId); if(!cvs) return;
-  const ctx=cvs.getContext('2d');
-  const cssW=(cvs.offsetWidth||cvs.clientWidth||700);
-  const cssH=labels.length?300:140;
-  const DPR=Math.max(1,window.devicePixelRatio||1);
+  var cvs=document.getElementById(canvasId); if(!cvs) return;
+  var ctx=cvs.getContext('2d');
+  var cssW=(cvs.offsetWidth||cvs.clientWidth||700);
+  var cssH=labels.length?300:140;
+  var DPR=Math.max(1,window.devicePixelRatio||1);
   cvs.width=cssW*DPR; cvs.height=cssH*DPR; cvs.style.height=cssH+'px';
   ctx.setTransform(DPR,0,0,DPR,0,0); ctx.clearRect(0,0,cssW,cssH);
   if(!labels.length){ ctx.fillStyle='#6b7280'; ctx.font='16px system-ui'; ctx.textAlign='center'; ctx.fillText('ยังไม่มีหัวข้อหลัก', cssW/2, cssH/2); return; }
-  const N=labels.length, vals=percents.map(v=>Math.max(0,Math.min(100,v))), cx=cssW/2, cy=cssH/2+6, maxR=Math.min(cssW,cssH)*0.36, steps=5;
+  var N=labels.length, vals=percents.map(function(v){return Math.max(0,Math.min(100,v));}), cx=cssW/2, cy=cssH/2+6, maxR=Math.min(cssW,cssH)*0.36, steps=5;
   ctx.lineWidth=1;
-  for(let s=1;s<=steps;s++){ const r=(s/steps)*maxR; ctx.beginPath(); for(let i=0;i<N;i++){ const a=(i/N)*Math.PI*2 - Math.PI/2; const x=cx+r*Math.cos(a),y=cy+r*Math.sin(a); i?ctx.lineTo(x,y):ctx.moveTo(x,y);} ctx.closePath(); ctx.strokeStyle='#e5e7eb'; ctx.stroke(); }
+  for(var s=1;s<=steps;s++){ var r=(s/steps)*maxR; ctx.beginPath(); for(var i=0;i<N;i++){ var a=(i/N)*Math.PI*2 - Math.PI/2; var x=cx+r*Math.cos(a),y=cy+r*Math.sin(a); i?ctx.lineTo(x,y):ctx.moveTo(x,y);} ctx.closePath(); ctx.strokeStyle='#e5e7eb'; ctx.stroke(); }
   ctx.font='12px system-ui'; ctx.fillStyle='#0f1220'; ctx.textAlign='center'; ctx.textBaseline='middle';
-  for(let i=0;i<N;i++){ const a2=(i/N)*Math.PI*2-Math.PI/2; const x2=cx+maxR*Math.cos(a2), y2=cy+maxR*Math.sin(a2); ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(x2,y2); ctx.strokeStyle='#e5e7eb'; ctx.stroke(); const lx=cx+(maxR+16)*Math.cos(a2), ly=cy+(maxR+16)*Math.sin(a2); ctx.fillText(labels[i], lx, ly); }
-  const pts=vals.map((v,i)=>{ const a=(i/N)*Math.PI*2-Math.PI/2, r=(v/100)*maxR; return {x:cx+r*Math.cos(a),y=cy+r*Math.sin(a)};});
-  ctx.beginPath(); pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y)); ctx.closePath();
+  for(i=0;i<N;i++){ var a2=(i/N)*Math.PI*2-Math.PI/2; var x2=cx+maxR*Math.cos(a2), y2=cy+maxR*Math.sin(a2); ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(x2,y2); ctx.strokeStyle='#e5e7eb'; ctx.stroke(); var lx=cx+(maxR+16)*Math.cos(a2), ly=cy+(maxR+16)*Math.sin(a2); ctx.fillText(labels[i], lx, ly); }
+  var pts=vals.map(function(v,i){ var a=(i/N)*Math.PI*2-Math.PI/2, r=(v/100)*maxR; return {x:cx+r*Math.cos(a),y=cy+r*Math.sin(a)};});
+  ctx.beginPath(); pts.forEach(function(p,i){i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y)}); ctx.closePath();
   ctx.fillStyle='rgba(37,99,235,.18)'; ctx.strokeStyle='#2563eb'; ctx.lineWidth=2; ctx.fill(); ctx.stroke();
-  ctx.fillStyle='#2563eb'; pts.forEach(p=>{ ctx.beginPath(); ctx.arc(p.x,p.y,3,0,Math.PI*2); ctx.fill(); });
+  ctx.fillStyle='#2563eb'; pts.forEach(function(p){ ctx.beginPath(); ctx.arc(p.x,p.y,3,0,Math.PI*2); ctx.fill(); });
   if(subtitle){ ctx.fillStyle='#6b7280'; ctx.font='12px system-ui'; ctx.textAlign='left'; ctx.fillText(subtitle,12,16); }
 }
 
-/* ========= Refs ========= */
-const homeView=byId('homeView'), mainView=byId('mainView'), subView=byId('subView');
-const topicsList=byId('topicsList'), subsList=byId('subsList');
-const backHomeBtn=byId('backHomeBtn'), backMainBtn=byId('backMainBtn');
-const mainTitle=byId('mainTitle'), mainSummary=byId('mainSummary'), deleteMainBtn=byId('deleteMainBtn');
-const subTitle=byId('subTitle'), subLive=byId('subLive'), deleteSubBtn=byId('deleteSubBtn');
-
-const tierHead=byId('tierHead'), tierLeftCol=byId('tierLeftCol'), tierRightCol=byId('tierRightCol');
-const tierLeftImg=byId('tierLeftImg'), tierRightImg=byId('tierRightImg');
-const tierBadge=byId('tierBadge'), tierPercent=byId('tierPercent');
-const subSegbar=byId('subSegbar');
-const historyTableBody=document.querySelector('#historyTable tbody');
-const exportCsvBtn=byId('exportCsvBtn');
-const addSubBtn=byId('addSubBtn'), addQuestBtn=byId('addQuestBtn');
+/* ===== Refs ===== */
+var homeView=byId('homeView'), mainView=byId('mainView'), subView=byId('subView');
+var topicsList=byId('topicsList'), subsList=byId('subsList');
+var backHomeBtn=byId('backHomeBtn'), backMainBtn=byId('backMainBtn');
+var mainTitle=byId('mainTitle'), mainSummary=byId('mainSummary'), deleteMainBtn=byId('deleteMainBtn');
+var subTitle=byId('subTitle'), subLive=byId('subLive'), deleteSubBtn=byId('deleteSubBtn');
+var tierHead=byId('tierHead'), tierLeftCol=byId('tierLeftCol'), tierRightCol=byId('tierRightCol');
+var tierLeftImg=byId('tierLeftImg'), tierRightImg=byId('tierRightImg');
+var tierBadge=byId('tierBadge'), tierPercent=byId('tierPercent');
+var subSegbar=byId('subSegbar');
+var historyTableBody=document.querySelector('#historyTable tbody');
+var exportCsvBtn=byId('exportCsvBtn');
+var addSubBtn=byId('addSubBtn'), addQuestBtn=byId('addQuestBtn');
 
 /* Modals */
-const subSetupModal=byId('subSetupModal');
-const ssName=byId('ssName'), ssCount=byId('ssCount'), ssRows=byId('ssRows');
-byId('ssClose').onclick=()=>subSetupModal.style.display='none';
-byId('ssCancel').onclick=()=>subSetupModal.style.display='none';
+var subSetupModal=byId('subSetupModal');
+var ssName=byId('ssName'), ssCount=byId('ssCount'), ssRows=byId('ssRows');
+byId('ssClose').onclick=function(){subSetupModal.style.display='none';};
+byId('ssCancel').onclick=function(){subSetupModal.style.display='none';};
 byId('ssCreate').onclick=createSubFromSetup;
 
-const questSetupModal=byId('questSetupModal');
-const qsName=byId('qsName'), qsCount=byId('qsCount'), qsRows=byId('qsRows');
-byId('qsClose').onclick=()=>questSetupModal.style.display='none';
-byId('qsCancel').onclick=()=>questSetupModal.style.display='none';
+var questSetupModal=byId('questSetupModal');
+var qsName=byId('qsName'), qsCount=byId('qsCount'), qsRows=byId('qsRows');
+byId('qsClose').onclick=function(){questSetupModal.style.display='none';};
+byId('qsCancel').onclick=function(){questSetupModal.style.display='none';};
 byId('qsCreate').onclick=createQuestFromSetup;
 
-let currentMainId=null, currentSubId=null;
+var currentMainId=null, currentSubId=null;
 
-/* ========= UI helpers ========= */
+/* ===== UI helpers ===== */
 function topicProgressPercent(t){
-  if(!t.subs?.length) return 0;
-  const vals=t.subs.map(s=>{ s=ensureSub(s); return ((s.tierIndex+1)/s.tierConfig.tiers.length)*100; });
-  return Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);
+  if(!t.subs || !t.subs.length) return 0;
+  var vals=t.subs.map(function(s){ s=ensureSub(s); return ((s.tierIndex+1)/s.tierConfig.tiers.length)*100; });
+  var sum=0; for(var i=0;i<vals.length;i++) sum+=vals[i];
+  return Math.round(sum/vals.length);
 }
 function tierStyleByIndex(idx){ if(idx>=2) return 'dia'; if(idx===1) return 'gold'; return ''; }
 
-/* create segmented bar into container */
 function buildSegBar(container, segments, filledUnits, styleCls){
-  container.className = 'segbar '+(styleCls||'');
+  container.className='segbar '+(styleCls||'');
   container.innerHTML='';
-  const full = Math.floor(filledUnits);
-  const frac = Math.max(0,Math.min(1, filledUnits - full));
-  for(let i=0;i<segments;i++){
-    const seg=document.createElement('div'); seg.className='seg';
-    const fill=document.createElement('div'); fill.className='fill';
-    const gloss=document.createElement('div'); gloss.className='gloss';
+  var full=Math.floor(filledUnits);
+  var frac=Math.max(0,Math.min(1, filledUnits-full));
+  for(var i=0;i<segments;i++){
+    var seg=document.createElement('div'); seg.className='seg';
+    var fill=document.createElement('div'); fill.className='fill';
+    var gloss=document.createElement('div'); gloss.className='gloss';
     if(i<full) fill.style.width='100%';
     else if(i===full) fill.style.width=(frac*100)+'%';
     seg.appendChild(fill); seg.appendChild(gloss);
@@ -349,322 +323,303 @@ function buildSegBar(container, segments, filledUnits, styleCls){
   }
 }
 
-/* ========= Home ========= */
+/* ===== Home ===== */
 function renderHome(){
   homeView.style.display='grid'; mainView.style.display='none'; subView.style.display='none';
   topicsList.innerHTML='';
   if(!db.topics.length){
-    const card=document.createElement('div'); card.className='card'; card.innerHTML='<div class="small">ยังไม่มีหัวข้อหลัก</div>'; topicsList.appendChild(card);
+    var card=document.createElement('div'); card.className='card'; card.innerHTML='<div class="small">ยังไม่มีหัวข้อหลัก</div>'; topicsList.appendChild(card);
   }else{
-    db.topics.forEach(t=>{
+    db.topics.forEach(function(t){
       ensureMain(t);
-      const p = topicProgressPercent(t);
-      const card=document.createElement('div'); card.className='card topic';
-      card.innerHTML=`
-        <div class="topic-name">${t.name||'หัวข้อหลัก'}</div>
-        <div class="listbar"><span style="width:${p}%"></span></div>
-        <div class="small" style="width:160px;text-align:right">${p}% • ${t.subs.length} ย่อย</div>`;
-      card.onclick=()=>openMain(t.id);
+      var p=topicProgressPercent(t);
+      var card=document.createElement('div'); card.className='card topic';
+      card.innerHTML='<div class="topic-name">'+(t.name||'หัวข้อหลัก')+'</div>'+
+        '<div class="listbar"><span style="width:'+p+'%"></span></div>'+
+        '<div class="small" style="width:160px;text-align:right">'+p+'% • '+t.subs.length+' ย่อย</div>';
+      card.onclick=function(){openMain(t.id);};
       topicsList.appendChild(card);
     });
   }
-  drawRadarOn('radarCanvas', db.topics.map(t=>t.name||''), db.topics.map(topicProgressPercent), 'ภาพรวมแบบง่าย');
+  drawRadarOn('radarCanvas', db.topics.map(function(t){return t.name||'';}), db.topics.map(topicProgressPercent), 'ภาพรวมแบบง่าย');
 }
 
-/* ========= Main ========= */
+/* ===== Main ===== */
 function openMain(id){
   currentMainId=id; currentSubId=null;
-  const main=db.topics.find(t=>t.id===id); ensureMain(main);
+  var main=db.topics.find(function(t){return t.id===id}); ensureMain(main);
   homeView.style.display='none'; mainView.style.display='grid'; subView.style.display='none';
   mainTitle.textContent=main.name||'หัวข้อหลัก';
-  mainSummary.textContent=`หัวข้อย่อยทั้งหมด: ${main.subs.length}`;
+  mainSummary.textContent='หัวข้อย่อยทั้งหมด: '+main.subs.length;
   subsList.innerHTML='';
-  if(!main.subs.length){ const empty=document.createElement('div'); empty.className='small'; empty.textContent='ยังไม่มีหัวข้อย่อย'; subsList.appendChild(empty); }
-  main.subs.forEach(sub=>{
+  if(!main.subs.length){ var empty=document.createElement('div'); empty.className='small'; empty.textContent='ยังไม่มีหัวข้อย่อย'; subsList.appendChild(empty); }
+  main.subs.forEach(function(sub){
     ensureSub(sub);
-    const tierNow=sub.tierConfig.tiers[sub.tierIndex]||{name:'—'};
-    const totalTier=sub.tierConfig.tiers.length;
-    const p = Math.round(((sub.tierIndex+1)/totalTier)*100);
-    const el=document.createElement('div'); el.className='card topic';
-    el.innerHTML=`
-      <div class="topic-name"><span style="font-weight:700">${sub.name}</span> <span class="tag">Tier ${sub.tierIndex+1}/${totalTier} • ${tierNow.name||''}</span></div>
-      <div class="listbar"><span style="width:${p}%"></span></div>
-      <div class="small" style="width:120px;text-align:right">${sub.quests.length} quests</div>`;
-    el.onclick=()=>openSub(sub.id);
+    var tierNow=sub.tierConfig.tiers[sub.tierIndex]||{name:'—'};
+    var totalTier=sub.tierConfig.tiers.length;
+    var p=Math.round(((sub.tierIndex+1)/totalTier)*100);
+    var el=document.createElement('div'); el.className='card topic';
+    el.innerHTML='<div class="topic-name"><span style="font-weight:700">'+sub.name+
+      '</span> <span class="tag">Tier '+(sub.tierIndex+1)+'/'+totalTier+' • '+(tierNow.name||'')+'</span></div>'+
+      '<div class="listbar"><span style="width:'+p+'%"></span></div>'+
+      '<div class="small" style="width:120px;text-align:right">'+sub.quests.length+' quests</div>';
+    el.onclick=function(){openSub(sub.id);};
     subsList.appendChild(el);
   });
-
-  drawRadarOn('topicRadarCanvas', main.subs.map(s=>s.name), main.subs.map(s=>((s.tierIndex+1)/s.tierConfig.tiers.length)*100), 'ความก้าวหน้าแบบหยาบ');
+  drawRadarOn('topicRadarCanvas', main.subs.map(function(s){return s.name}), main.subs.map(function(s){s=ensureSub(s);return ((s.tierIndex+1)/s.tierConfig.tiers.length)*100;}), 'ความก้าวหน้าแบบหยาบ');
 }
-backHomeBtn.onclick=()=>{ currentMainId=null; renderHome(); };
-addSubBtn.onclick=()=>openSubSetup();
-byId('deleteMainBtn').onclick=()=>{ if(!confirm('ลบหัวข้อหลักนี้และทั้งหมดภายใน?')) return; db.topics = db.topics.filter(t=>t.id!==currentMainId); saveDB(db); currentMainId=null; renderHome(); };
+backHomeBtn.onclick=function(){ currentMainId=null; renderHome(); };
+addSubBtn.onclick=function(){ openSubSetup(); };
+byId('deleteMainBtn').onclick=function(){ if(!confirm('ลบหัวข้อหลักนี้และทั้งหมดภายใน?')) return; db.topics=db.topics.filter(function(t){return t.id!==currentMainId}); saveDB(db); currentMainId=null; renderHome(); };
 
-/* ========= Sub ========= */
+/* ===== Sub ===== */
 function openSub(subId){
   currentSubId=subId;
-  const main=db.topics.find(t=>t.id===currentMainId);
-  const sub=ensureSub(main.subs.find(s=>s.id===subId));
+  var main=db.topics.find(function(t){return t.id===currentMainId});
+  var sub=ensureSub(main.subs.find(function(s){return s.id===subId}));
   mainView.style.display='none'; subView.style.display='grid';
-  subTitle.textContent=`${main.name} › ${sub.name}`;
-  updateSubHeader();
-  renderQuests();
-  renderHistory();
+  subTitle.textContent=main.name+' › '+sub.name;
+  updateSubHeader(); renderQuests(); renderHistory();
 }
-backMainBtn.onclick=()=>openMain(currentMainId);
+backMainBtn.onclick=function(){openMain(currentMainId);};
 
 function updateSubHeader(){
-  const main=db.topics.find(t=>t.id===currentMainId);
-  const sub=ensureSub(main.subs.find(s=>s.id===currentSubId));
-  const tiers=sub.tierConfig.tiers; const i=sub.tierIndex;
-  const cur=tiers[i]; const next=tiers[i+1];
+  var main=db.topics.find(function(t){return t.id===currentMainId});
+  var sub=ensureSub(main.subs.find(function(s){return s.id===currentSubId}));
+  var tiers=sub.tierConfig.tiers; var i=sub.tierIndex;
+  var cur=tiers[i]; var next=tiers[i+1];
 
-  // Layout & images
   tierHead.classList.toggle('centered', !next);
   tierLeftCol.classList.toggle('center', !next);
   tierRightCol.style.display = next? 'block':'none';
   tierLeftImg.src = (cur&&cur.img)||'';
   tierRightImg.src = (next&&next.img)||'';
   byId('tierRightTitle').textContent = next? 'Tier ถัดไป':'ถึง Tier สูงสุดแล้ว';
-  tierBadge.textContent = `Tier ${i+1} / ${tiers.length}${cur&&cur.name?' • '+cur.name:''}`;
+  tierBadge.textContent = 'Tier '+(i+1)+' / '+tiers.length+(cur&&cur.name?(' • '+cur.name):'');
 
-  // Progress from quests
-  const quests = sub.quests.map(ensureQuest);
-  let avg = 0;
+  var quests=sub.quests.map(ensureQuest);
+  var avg=0;
   if(quests.length){
-    avg = quests.map(q=>{
-      const t=q.tierConfig.tiers[q.tierIndex]||{units:1};
-      return Math.max(0, Math.min(1, (q.progress)/(t.units||1) ));
-    }).reduce((a,b)=>a+b,0)/quests.length;
+    var acc=0;
+    quests.forEach(function(q){
+      var t=q.tierConfig.tiers[q.tierIndex]||{units:1};
+      var ratio=Math.max(0,Math.min(1,(q.progress)/(t.units||1)));
+      acc+=ratio;
+    });
+    avg=acc/quests.length;
   }
-  const unitNeed = (cur&&cur.units)||1;
-  const filledUnits = avg*unitNeed;
-  tierPercent.textContent = Math.round(avg*100)+'%';
-
-  // pretty segmented bar
+  var unitNeed=(cur&&cur.units)||1;
+  var filledUnits=avg*unitNeed;
+  tierPercent.textContent=Math.round(avg*100)+'%';
   buildSegBar(subSegbar, unitNeed, filledUnits, tierStyleByIndex(i));
-
-  subLive.textContent = `ค่า ณ ปัจจุบัน: Tier ${sub.tierIndex+1}/${tiers.length}`;
+  subLive.textContent='ค่า ณ ปัจจุบัน: Tier '+(sub.tierIndex+1)+'/'+tiers.length;
   saveDB(db);
 }
 
-/* Level up sub when ready */
 function levelUpSubIfReady(){
-  const main=db.topics.find(t=>t.id===currentMainId);
-  const sub=ensureSub(main.subs.find(s=>s.id===currentSubId));
-  const tiers=sub.tierConfig.tiers; const i=sub.tierIndex;
+  var main=db.topics.find(function(t){return t.id===currentMainId});
+  var sub=ensureSub(main.subs.find(function(s){return s.id===currentSubId}));
+  var tiers=sub.tierConfig.tiers; var i=sub.tierIndex;
   if(i>=tiers.length-1) return;
 
-  const quests = sub.quests.map(ensureQuest);
-  let avg = 0;
+  var quests=sub.quests.map(ensureQuest);
+  var avg=0;
   if(quests.length){
-    avg = quests.map(q=>{
-      const t=q.tierConfig.tiers[q.tierIndex]||{units:1};
-      return Math.max(0, Math.min(1, (q.progress)/(t.units||1) ));
-    }).reduce((a,b)=>a+b,0)/quests.length;
+    var sum=0; quests.forEach(function(q){
+      var t=q.tierConfig.tiers[q.tierIndex]||{units:1};
+      sum+=Math.max(0,Math.min(1,(q.progress)/(t.units||1)));
+    }); avg=sum/quests.length;
   }
-  const need=(tiers[i]&&tiers[i].units)||1;
+  var need=(tiers[i]&&tiers[i].units)||1;
   if(avg*need>=need-1e-9){
     sub.tierIndex++;
-    sub.logs.push({time:nowISO(),type:'SUB_TIER_UP',detail:`เลื่อนเป็น Tier ${sub.tierIndex+1} • ${tiers[sub.tierIndex].name||''}`});
-    sub.quests.forEach(q=>{ q.progress = 0; });
-    alert(`ยินดีด้วย! "${sub.name}" เลื่อนเป็น Tier ${sub.tierIndex+1}`);
+    sub.logs.push({time:nowISO(),type:'SUB_TIER_UP',detail:'เลื่อนเป็น Tier '+(sub.tierIndex+1)+' • '+(tiers[sub.tierIndex].name||'')});
+    sub.quests.forEach(function(q){ q.progress=0; });
+    alert('ยินดีด้วย! "'+sub.name+'" เลื่อนเป็น Tier '+(sub.tierIndex+1));
     saveDB(db); updateSubHeader(); renderQuests(); renderHistory();
   }
 }
 
-/* ========= Quests ========= */
+/* ===== Quests ===== */
 function renderQuests(){
-  const main=db.topics.find(t=>t.id===currentMainId);
-  const sub=ensureSub(main.subs.find(s=>s.id===currentSubId));
-  const box=byId('questsList'); box.innerHTML='';
+  var main=db.topics.find(function(t){return t.id===currentMainId});
+  var sub=ensureSub(main.subs.find(function(s){return s.id===currentSubId}));
+  var box=byId('questsList'); box.innerHTML='';
 
-  if(!sub.quests.length){
-    const empty=document.createElement('div'); empty.className='small'; empty.textContent='ยังไม่มี Quest'; box.appendChild(empty);
-  }
+  if(!sub.quests.length){ var empty=document.createElement('div'); empty.className='small'; empty.textContent='ยังไม่มี Quest'; box.appendChild(empty); }
 
-  sub.quests.forEach(q=>{
+  sub.quests.forEach(function(q){
     ensureQuest(q);
-    const tNow=q.tierConfig.tiers[q.tierIndex]||{name:'',units:1,cond:''};
-    const row=document.createElement('div'); row.className='quest-row quest-card fade-in';
+    var tNow=q.tierConfig.tiers[q.tierIndex]||{name:'',units:1,cond:''};
+    var row=document.createElement('div'); row.className='quest-row quest-card fade-in';
 
-    const progressHolder=document.createElement('div'); // ที่วาง segbar
-    const styleCls=tierStyleByIndex(q.tierIndex);
-    buildSegBar(progressHolder, tNow.units||1, q.progress||0, styleCls);
+    var progressHolder=document.createElement('div');
+    buildSegBar(progressHolder, tNow.units||1, q.progress||0, tierStyleByIndex(q.tierIndex));
 
-    row.innerHTML=`
-      <div>
-        <div class="quest-title">${q.title}<span class="tag">T${q.tierIndex+1}/${q.tierConfig.tiers.length} • ${tNow.name}</span></div>
-        <div class="small cond">${tNow.cond?('เงื่อนไข: '+tNow.cond):''}</div>
-        <div class="small">หน่วยที่ต้องใช้ใน Tier นี้: ${tNow.units}</div>
-      </div>
-      <div></div>
-      <div class="row" style="justify-content:flex-end">
-        <button class="btn success">เพิ่ม +</button>
-        <button class="btn danger">ลด −</button>
-        <button class="btn secondary">แก้ไข</button>
-        <button class="btn ghost">ลบ</button>
-      </div>`;
+    row.innerHTML='<div><div class="quest-title">'+q.title+
+      '<span class="tag">T'+(q.tierIndex+1)+'/'+q.tierConfig.tiers.length+' • '+tNow.name+
+      '</span></div><div class="small cond">'+(tNow.cond?('เงื่อนไข: '+tNow.cond):'')+
+      '</div><div class="small">หน่วยที่ต้องใช้ใน Tier นี้: '+tNow.units+
+      '</div></div><div></div><div class="row" style="justify-content:flex-end">'+
+      '<button class="btn success">เพิ่ม +</button>'+
+      '<button class="btn danger">ลด −</button>'+
+      '<button class="btn secondary">แก้ไข</button>'+
+      '<button class="btn ghost">ลบ</button></div>';
     row.children[1].appendChild(progressHolder);
+    var btns=row.querySelectorAll('button');
+    var bPlus=btns[0], bMinus=btns[1], bEdit=btns[2], bDel=btns[3];
 
-    const [bPlus,bMinus,bEdit,bDel]=row.querySelectorAll('button');
-    bPlus.onclick=()=>{
+    bPlus.onclick=function(){
       if(q.tierIndex>=q.tierConfig.tiers.length-1 && q.progress>=tNow.units){ return; }
       q.progress++;
       if(q.progress>=tNow.units){
         if(q.tierIndex<q.tierConfig.tiers.length-1){
           q.tierIndex++; q.progress=0;
-          sub.logs.push({time:nowISO(),type:'QUEST_TIER_UP',detail:`${q.title} → T${q.tierIndex+1}`});
+          sub.logs.push({time:nowISO(),type:'QUEST_TIER_UP',detail:q.title+' → T'+(q.tierIndex+1)});
         }else{
           q.progress=tNow.units;
         }
       }
       saveDB(db); updateSubHeader(); renderQuests(); levelUpSubIfReady();
     };
-    bMinus.onclick=()=>{ q.progress=Math.max(0, q.progress-1); saveDB(db); updateSubHeader(); renderQuests(); };
-    bEdit.onclick=()=>openQuestSetup(q);
-    bDel.onclick=()=>{ if(!confirm('ลบ Quest นี้?')) return; sub.quests=sub.quests.filter(x=>x.id!==q.id); saveDB(db); renderQuests(); updateSubHeader(); };
+    bMinus.onclick=function(){ q.progress=Math.max(0, q.progress-1); saveDB(db); updateSubHeader(); renderQuests(); };
+    bEdit.onclick=function(){ openQuestSetup(q); };
+    bDel.onclick=function(){ if(!confirm('ลบ Quest นี้?')) return; sub.quests=sub.quests.filter(function(x){return x.id!==q.id}); saveDB(db); renderQuests(); updateSubHeader(); };
 
     box.appendChild(row);
   });
 }
+addQuestBtn.onclick=function(){ openQuestSetup(); };
 
-addQuestBtn.onclick=()=>openQuestSetup();
-
-/* ========= History ========= */
+/* ===== History ===== */
 function renderHistory(){
-  const main=db.topics.find(t=>t.id===currentMainId);
-  const sub=ensureSub(main.subs.find(s=>s.id===currentSubId));
+  var main=db.topics.find(function(t){return t.id===currentMainId});
+  var sub=ensureSub(main.subs.find(function(s){return s.id===currentSubId}));
   historyTableBody.innerHTML='';
-  (sub.logs||[]).slice().reverse().forEach(r=>{
-    const tr=document.createElement('tr');
-    const tt=new Date(r.time).toLocaleString();
-    tr.innerHTML = `<td>${tt}</td><td>${r.detail||''}</td><td>${r.type||''}</td>`;
+  (sub.logs||[]).slice().reverse().forEach(function(r){
+    var tr=document.createElement('tr');
+    var tt=new Date(r.time).toLocaleString();
+    tr.innerHTML='<td>'+tt+'</td><td>'+(r.detail||'')+'</td><td>'+(r.type||'')+'</td>';
     historyTableBody.appendChild(tr);
   });
 }
-byId('exportCsvBtn').onclick=()=>{
-  const main=db.topics.find(t=>t.id===currentMainId);
-  const sub=ensureSub(main.subs.find(s=>s.id===currentSubId));
-  const rows=[['time','type','detail'],...(sub.logs||[]).map(r=>[r.time,r.type||'',r.detail||''])];
-  const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
-  download(`${main.name.replace(/\s+/g,'_')}__${sub.name.replace(/\s+/g,'_')}_logs.csv`, csv);
+byId('exportCsvBtn').onclick=function(){
+  var main=db.topics.find(function(t){return t.id===currentMainId});
+  var sub=ensureSub(main.subs.find(function(s){return s.id===currentSubId}));
+  var rows=[['time','type','detail']];
+  (sub.logs||[]).forEach(function(r){ rows.push([r.time,r.type||'',r.detail||'']); });
+  var csv=rows.map(function(r){return r.map(function(v){return '"'+String(v).replace(/"/g,'""')+'"'}).join(',')}).join('\n');
+  download(main.name.replace(/\s+/g,'_')+'__'+sub.name.replace(/\s+/g,'_')+'_logs.csv', csv);
 };
 
-deleteSubBtn.onclick=()=>{
+deleteSubBtn.onclick=function(){
   if(!confirm('ลบหัวข้อย่อยนี้ทั้งหมด?')) return;
-  const main=db.topics.find(t=>t.id===currentMainId);
-  main.subs=main.subs.filter(s=>s.id!==currentSubId); saveDB(db); openMain(currentMainId);
+  var main=db.topics.find(function(t){return t.id===currentMainId});
+  main.subs=main.subs.filter(function(s){return s.id!==currentSubId}); saveDB(db); openMain(currentMainId);
 };
 
-/* ========= Sub Setup ========= */
-function openSubSetup(){
-  ssName.value=''; ssCount.value=3; buildSubSetupRows(); subSetupModal.style.display='flex';
-}
+/* ===== Sub Setup ===== */
+function openSubSetup(){ ssName.value=''; ssCount.value=3; buildSubSetupRows(); subSetupModal.style.display='flex'; }
 ssCount.oninput=buildSubSetupRows;
 
 function buildSubSetupRows(){
-  const n=Math.max(1,Number(ssCount.value||1));
+  var n=Math.max(1,Number(ssCount.value||1));
   ssRows.innerHTML='';
-  for(let i=0;i<n;i++){
-    const row=document.createElement('div'); row.className='tier-row';
-    row.innerHTML=`
-      <div>
-        <img class="img-thumb" id="ssImg_${i}">
-        <input type="file" accept="image/*" id="ssFile_${i}" style="margin-top:6px">
-      </div>
-      <div><label>ชื่อ Tier</label><input type="text" id="ssTitle_${i}" value="${i===0?'Beginner':('Tier '+(i+1))}"></div>
-      <div><label>จำนวนหลอดที่ต้องใช้</label><input type="number" id="ssUnits_${i}" min="1" step="1" value="5"></div>
-      <div style="text-align:right"><span class="pill">T${i+1}</span></div>`;
+  for(var i=0;i<n;i++){
+    var row=document.createElement('div'); row.className='tier-row';
+    row.innerHTML='<div><img class="img-thumb" id="ssImg_'+i+'">'+
+      '<input type="file" accept="image/*" id="ssFile_'+i+'" style="margin-top:6px"></div>'+
+      '<div><label>ชื่อ Tier</label><input type="text" id="ssTitle_'+i+'" value="'+(i===0?'Beginner':('Tier '+(i+1)))+'"></div>'+
+      '<div><label>จำนวนหลอดที่ต้องใช้</label><input type="number" id="ssUnits_'+i+'" min="1" step="1" value="5"></div>'+
+      '<div style="text-align:right"><span class="pill">T'+(i+1)+'</span></div>';
     ssRows.appendChild(row);
-    const file=byId(`ssFile_${i}`), img=byId(`ssImg_${i}`);
-    file.onchange=async (e)=>{ const f=e.target.files[0]; if(!f) return; const url=await fileToDataURL(f); img.src=url; };
+    (function(idx){
+      var file=byId('ssFile_'+idx), img=byId('ssImg_'+idx);
+      file.onchange=function(e){ var f=e.target.files[0]; if(!f) return; var r=new FileReader(); r.onload=function(){ img.src=r.result; }; r.readAsDataURL(f); };
+    })(i);
   }
 }
-async function fileToDataURL(f){ return new Promise(res=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.readAsDataURL(f); }); }
 
 function createSubFromSetup(){
-  const name=(ssName.value||'').trim(); if(!name) return alert('กรุณาใส่ชื่อหัวข้อย่อย');
-  const n=Math.max(1,Number(ssCount.value||1));
-  const tiers=[];
-  for(let i=0;i<n;i++){
-    const tName=byId(`ssTitle_${i}`).value||('Tier '+(i+1));
-    const units=Math.max(1,Number(byId(`ssUnits_${i}`).value||1));
-    const img=byId(`ssImg_${i}`).src||'';
-    tiers.push({name:tName,units,img});
+  var name=(ssName.value||'').trim(); if(!name) return alert('กรุณาใส่ชื่อหัวข้อย่อย');
+  var n=Math.max(1,Number(ssCount.value||1));
+  var tiers=[];
+  for(var i=0;i<n;i++){
+    var tName=byId('ssTitle_'+i).value||('Tier '+(i+1));
+    var units=Math.max(1,Number(byId('ssUnits_'+i).value||1));
+    var img=byId('ssImg_'+i).src||'';
+    tiers.push({name:tName,units:units,img:img});
   }
-  const sub={id:uid(),name, tierConfig:{tiers}, tierIndex:0, quests:[], logs:[]};
-  const main=db.topics.find(t=>t.id===currentMainId);
+  var sub={id:uid(),name:name,tierConfig:{tiers:tiers},tierIndex:0,quests:[],logs:[]};
+  var main=db.topics.find(function(t){return t.id===currentMainId});
   main.subs.push(sub); saveDB(db); subSetupModal.style.display='none'; openSub(sub.id);
 }
 
-/* ========= Quest Setup ========= */
+/* ===== Quest Setup ===== */
 function openQuestSetup(editing){
   questSetupModal.style.display='flex';
   if(editing){
     questSetupModal.setAttribute('data-edit-id', editing.id);
     qsName.value = editing.title||'';
-    qsCount.value = editing.tierConfig?.tiers?.length||3;
+    qsCount.value = (editing.tierConfig&&editing.tierConfig.tiers&&editing.tierConfig.tiers.length)||3;
   }else{
     questSetupModal.removeAttribute('data-edit-id');
     qsName.value=''; qsCount.value=3;
   }
   buildQuestRows(editing);
 }
-qsCount.oninput=()=>buildQuestRows();
+qsCount.oninput=function(){buildQuestRows();};
 
 function buildQuestRows(editing){
-  const n=Math.max(1,Number(qsCount.value||1));
+  var n=Math.max(1,Number(qsCount.value||1));
   qsRows.innerHTML='';
-  const tiers = editing? ensureQuest(editing).tierConfig.tiers : null;
-  for(let i=0;i<n;i++){
-    const units = tiers && tiers[i] ? tiers[i].units : 5;
-    const name = tiers && tiers[i] ? tiers[i].name : ('T'+(i+1));
-    const cond = tiers && tiers[i] ? (tiers[i].cond||'') : '';
-    const row=document.createElement('div'); row.className='tier-row';
-    row.innerHTML = `
-      <div style="text-align:center"><span class="pill">T${i+1}</span></div>
-      <div><label>ชื่อ Tier</label><input type="text" id="qsTitle_${i}" value="${name}"></div>
-      <div><label>จำนวนหลอดที่ใช้</label><input type="number" id="qsUnits_${i}" min="1" step="1" value="${units}"></div>
-      <div><label>เงื่อนไขของ Tier นี้</label><input type="text" id="qsCond_${i}" placeholder="ตัวอย่าง: ทำครบ 5 วัน/สัปดาห์" value="${cond}"></div>`;
+  var tiers = editing? ensureQuest(editing).tierConfig.tiers : null;
+  for(var i=0;i<n;i++){
+    var units = tiers && tiers[i] ? tiers[i].units : 5;
+    var name  = tiers && tiers[i] ? tiers[i].name  : ('T'+(i+1));
+    var cond  = tiers && tiers[i] ? (tiers[i].cond||'') : '';
+    var row=document.createElement('div'); row.className='tier-row';
+    row.innerHTML='<div style="text-align:center"><span class="pill">T'+(i+1)+'</span></div>'+
+      '<div><label>ชื่อ Tier</label><input type="text" id="qsTitle_'+i+'" value="'+name+'"></div>'+
+      '<div><label>จำนวนหลอดที่ใช้</label><input type="number" id="qsUnits_'+i+'" min="1" step="1" value="'+units+'"></div>'+
+      '<div><label>เงื่อนไขของ Tier นี้</label><input type="text" id="qsCond_'+i+'" placeholder="ตัวอย่าง: ทำครบ 5 วัน/สัปดาห์" value="'+cond+'"></div>';
     qsRows.appendChild(row);
   }
 }
 function createQuestFromSetup(){
-  const title=(qsName.value||'').trim(); if(!title) return alert('กรุณาใส่ชื่อ Quest');
-  const n=Math.max(1,Number(qsCount.value||1));
-  const tiers=[];
-  for(let i=0;i<n;i++){
-    const name=byId(`qsTitle_${i}`).value||('T'+(i+1));
-    const units=Math.max(1,Number(byId(`qsUnits_${i}`).value||1));
-    const cond=(byId(`qsCond_${i}`).value||'').trim();
-    tiers.push({name,units,cond});
+  var title=(qsName.value||'').trim(); if(!title) return alert('กรุณาใส่ชื่อ Quest');
+  var n=Math.max(1,Number(qsCount.value||1));
+  var tiers=[];
+  for(var i=0;i<n;i++){
+    var name=byId('qsTitle_'+i).value||('T'+(i+1));
+    var units=Math.max(1,Number(byId('qsUnits_'+i).value||1));
+    var cond=(byId('qsCond_'+i).value||'').trim();
+    tiers.push({name:name,units:units,cond:cond});
   }
-  const main=db.topics.find(t=>t.id===currentMainId);
-  const sub=ensureSub(main.subs.find(s=>s.id===currentSubId));
-
-  const editId=questSetupModal.getAttribute('data-edit-id');
+  var main=db.topics.find(function(t){return t.id===currentMainId});
+  var sub=ensureSub(main.subs.find(function(s){return s.id===currentSubId}));
+  var editId=questSetupModal.getAttribute('data-edit-id');
   if(editId){
-    const q=sub.quests.find(x=>x.id===editId);
-    q.title=title; q.tierConfig={tiers}; q.tierIndex=Math.min(q.tierIndex, tiers.length-1); q.progress=0;
+    var q=sub.quests.find(function(x){return x.id===editId});
+    q.title=title; q.tierConfig={tiers:tiers}; q.tierIndex=Math.min(q.tierIndex, tiers.length-1); q.progress=0;
   }else{
-    sub.quests.push({id:uid(),title, tierConfig:{tiers}, tierIndex:0, progress:0});
+    sub.quests.push({id:uid(),title:title,tierConfig:{tiers:tiers},tierIndex:0,progress:0});
   }
   saveDB(db); questSetupModal.style.display='none'; renderQuests(); updateSubHeader();
 }
 
-/* ========= Add / Export / Boot ========= */
-byId('addTopicBtn').onclick=()=>{ const name=prompt('ชื่อหัวข้อหลัก'); if(!name) return; db.topics.push({id:uid(),name:name.trim(),subs:[]}); saveDB(db); renderHome(); };
-byId('exportAllBtn').onclick=()=>download('progress_backup_tier_polish.json', JSON.stringify(db,null,2));
+/* ===== Add / Export / Boot ===== */
+byId('addTopicBtn').onclick=function(){ var name=prompt('ชื่อหัวข้อหลัก'); if(!name) return; db.topics.push({id:uid(),name:name.trim(),subs:[]}); saveDB(db); renderHome(); };
+byId('exportAllBtn').onclick=function(){ download('progress_backup_tier_compat.json', JSON.stringify(db,null,2)); };
 
 function start(){
   db.topics.forEach(ensureMain);
   renderHome();
-  window.addEventListener('resize', ()=>{
-    drawRadarOn('radarCanvas', db.topics.map(t=>t.name||''), db.topics.map(topicProgressPercent), 'ภาพรวมแบบง่าย');
+  window.addEventListener('resize', function(){
+    drawRadarOn('radarCanvas', db.topics.map(function(t){return t.name||'';}), db.topics.map(topicProgressPercent), 'ภาพรวมแบบง่าย');
     if(currentMainId){
-      const m=db.topics.find(t=>t.id===currentMainId)||{subs:[]};
-      drawRadarOn('topicRadarCanvas', m.subs.map(s=>s.name), m.subs.map(s=>((ensureSub(s).tierIndex+1)/ensureSub(s).tierConfig.tiers.length)*100), 'ความก้าวหน้าแบบหยาบ');
+      var m=db.topics.find(function(t){return t.id===currentMainId})||{subs:[]};
+      drawRadarOn('topicRadarCanvas', m.subs.map(function(s){return s.name}), m.subs.map(function(s){s=ensureSub(s);return ((s.tierIndex+1)/s.tierConfig.tiers.length)*100;}), 'ความก้าวหน้าแบบหยาบ');
     }
   });
 }
