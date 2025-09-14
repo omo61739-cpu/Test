@@ -3,131 +3,155 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Progressive Self-Development • Dark</title>
+<title>Progressive Self-Development • Neo Dark</title>
 <style>
   :root{
-    /* Dark Navy Theme */
-    --bg:#0b1020;            /* พื้นหลังหลัก */
-    --panel:#0f172a;         /* การ์ด */
-    --panel-2:#0d1426;       /* พื้นที่รอง/มอดัล */
-    --ink:#e5e7eb;           /* ตัวอักษรหลัก */
-    --muted:#9ca3af;         /* ข้อความรอง */
-    --border:#1f2944;        /* เส้นขอบเบา ๆ */
-    --accent:#3b82f6;        /* น้ำเงินหลัก */
-    --accent-2:#22d3ee;      /* ฟ้าเน้น (แถบ/ประกาย) */
-    --danger:#ef4444;        /* แดง */
-    --success:#10b981;       /* เขียว */
-    --gold:#f59e0b;          /* ทอง (Tier สวยขึ้น) */
-    --diamond:#60a5fa;       /* เพชร (ประกาย) */
-
+    /* === Neo Dark / Blue theme === */
+    --bg:#070a14;            /* พื้นหลังหลัก */
+    --bg-2:#0b1120;
+    --panel:#0b1222;         /* การ์ดพื้นหลัง */
+    --panel-hi:#0d1630;      /* การ์ดเด่น/มอดัล */
+    --ink:#e5e7eb;           /* ตัวอักษร */
+    --muted:#9aa4b2;         /* ตัวอักษรรอง */
+    --border:#1e2a47;        /* เส้นแบ่ง */
+    --accent:#5da8ff;        /* น้ำเงินหลัก */
+    --accent-2:#22d3ee;      /* ฟ้าเน้น */
+    --accent-3:#8b5cf6;      /* ม่วงเน้น */
+    --success:#22c55e;
+    --danger:#ef4444;
+    --gold:#f5b300;
     --radius:16px;
-    --shadow:0 10px 40px rgba(0,0,0,.35);
-    --ring:0 0 0 1px var(--border), 0 15px 35px rgba(2,6,23,.45) inset;
+    --shadow:0 20px 60px rgba(0,0,0,.45);
   }
+
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
-    margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    background:
-      radial-gradient(1000px 600px at 0% -10%, #111a33 0%, transparent 60%),
-      radial-gradient(1000px 600px at 100% 0%, #0c1a35 0%, transparent 50%),
-      var(--bg);
+    margin:0; font-family:ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans Thai", Arial, sans-serif;
     color:var(--ink);
+    background:
+      radial-gradient(1200px 700px at -10% -10%, #0e1b36 0%, transparent 70%),
+      radial-gradient(1200px 700px at 110% 0%, #0a1833 0%, transparent 72%),
+      linear-gradient(180deg, #050910, #070a14 40%);
   }
-  a{color:inherit}
-  .container{max-width:1100px;margin:0 auto;padding:18px}
+  .container{max-width:1120px;margin:0 auto;padding:18px}
   header{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:14px}
-  h1{font-size:20px;margin:0;font-weight:800;letter-spacing:.2px}
+  h1{margin:0;font-size:20px;font-weight:800;letter-spacing:.2px}
   h2{margin:.2rem 0 0 0}
   h3{margin:.2rem 0}
 
+  /* Buttons */
   .btn{
-    border:1px solid transparent; background:linear-gradient(180deg,#3b82f6,#2563eb);
-    color:#fff; border-radius:12px; padding:10px 14px; font-size:14px; cursor:pointer; box-shadow:var(--shadow);
-    transition:transform .06s ease, filter .15s ease;
+    border:1px solid transparent; border-radius:12px; padding:10px 14px; font-size:14px; cursor:pointer;
+    background:linear-gradient(180deg, #5da8ff, #346cf0);
+    color:#fff; box-shadow:0 4px 18px rgba(52,108,240,.3);
+    transition:filter .15s ease, transform .06s ease;
   }
-  .btn:hover{filter:brightness(1.08)}
+  .btn:hover{filter:brightness(1.06)}
   .btn:active{transform:translateY(1px)}
   .btn.ghost{background:transparent;border-color:var(--border);color:var(--ink)}
-  .btn.secondary{background:linear-gradient(180deg,#1f2937,#111827);border-color:#29324d}
-  .btn.success{background:linear-gradient(180deg,#16a34a,#0ea36a)}
+  .btn.soft{background:linear-gradient(180deg,#101a33,#0c1428);border:1px solid #203056}
+  .btn.secondary{background:linear-gradient(180deg,#1b233a,#10182c);border:1px solid #23345c}
+  .btn.success{background:linear-gradient(180deg,#16a34a,#0f8a44)}
   .btn.danger{background:linear-gradient(180deg,#ef4444,#b91c1c)}
-  .btn.soft{background:#111a33;border:1px solid #1f2a4b}
-
-  .pill{padding:6px 10px;border:1px solid #1f2a4b;border-radius:999px;color:#cbd5e1;background:#0c1328}
+  .pill{padding:6px 10px;border:1px solid #23345c;border-radius:999px;background:#0a142b;color:#cbd5e1}
+  .muted{color:var(--muted);font-size:12px}
   .grid{display:grid;gap:14px}
-
-  .card{
-    background:linear-gradient(180deg,rgba(16,24,40,.55),rgba(11,17,30,.55));
-    border:1px solid var(--border); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow); backdrop-filter: blur(8px);
-  }
-  .card.soft{background:rgba(7,12,24,.55)}
   .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
   .right{margin-left:auto}
-  .muted{color:var(--muted);font-size:12px}
 
+  /* Cards */
+  .card{
+    background:linear-gradient(180deg, rgba(23,32,55,.8), rgba(12,18,36,.72));
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:14px;
+    box-shadow:var(--shadow);
+    backdrop-filter: blur(8px);
+  }
+  .card.soft{background:linear-gradient(180deg, rgba(15,22,40,.66), rgba(10,16,32,.6))}
+
+  /* Inputs */
   input[type="text"], input[type="number"], textarea{
-    width:100%; background:#0b142a; color:var(--ink);
+    width:100%; background:#0a1429; color:var(--ink);
     border:1px solid var(--border); border-radius:12px; padding:10px; outline:none;
   }
   textarea{min-height:76px;resize:vertical}
 
-  /* ===== Progress Bars (Neon Segments) ===== */
+  /* Topic list */
+  .topic{display:flex;gap:12px;align-items:center}
+  .topic-name{flex:1;font-weight:800}
+
+  /* Neon progress bar (segment + glow) */
   .bar{
-    position:relative; height:14px; background:#0b1530; border-radius:999px; overflow:hidden;
-    border:1px solid #1e2b57; box-shadow:inset 0 2px 8px rgba(0,0,0,.6);
+    position:relative; height:14px; border-radius:999px; overflow:hidden;
+    background:linear-gradient(180deg,#0a1427,#060b16);
+    border:1px solid #21325a; box-shadow: inset 0 2px 10px rgba(0,0,0,.6);
   }
   .bar .fill{
     position:absolute; left:0; top:0; height:100%;
-    background:linear-gradient(90deg, #22d3ee 0%, #3b82f6 50%, #7c3aed 100%);
-    filter:saturate(1.2) drop-shadow(0 0 10px rgba(59,130,246,.6));
+    background:linear-gradient(90deg,#22d3ee 0%, #5da8ff 50%, #8b5cf6 100%);
+    filter:saturate(1.1) drop-shadow(0 0 8px rgba(93,168,255,.5));
+    transition:width .25s ease;
   }
-  .bar .seg{
-    position:absolute; top:0; bottom:0; width:1px; background:rgba(255,255,255,.08);
+  .bar .seg{position:absolute; top:0; bottom:0; width:1px; background:rgba(255,255,255,.08)}
+
+  /* “สวยขึ้นตาม Tier” */
+  .bar.tier2{
+    background:linear-gradient(180deg,#1b1403,#0d0b05);
+    border-color:#6f5412; box-shadow: inset 0 2px 12px rgba(0,0,0,.8), 0 0 0 1px rgba(245,179,0,.18);
   }
-  .bar.tier2{ border-color:#66511a; box-shadow: inset 0 2px 10px rgba(0,0,0,.8), 0 0 0 1px rgba(245,158,11,.2);
-              background:linear-gradient(180deg,#1a1203,#0b0a05);}
   .bar.tier2 .fill{
-    background:linear-gradient(90deg,#f59e0b,#fbbf24,#fde68a);
-    filter:saturate(1.2) drop-shadow(0 0 10px rgba(245,158,11,.45));
+    background:linear-gradient(90deg,#f5b300,#ffd166,#fff1a6);
+    filter:drop-shadow(0 0 10px rgba(245,179,0,.45));
   }
-  .bar.tier3{ border-color:#4c6fff; background:linear-gradient(180deg,#0b1233,#050711);
-              box-shadow: inset 0 2px 10px rgba(0,0,0,.85), 0 0 0 1px rgba(96,165,250,.25);}
+  .bar.tier3{
+    background:linear-gradient(180deg,#0e1538,#070912);
+    border-color:#5276ff; box-shadow: inset 0 2px 12px rgba(0,0,0,.85), 0 0 0 1px rgba(96,165,250,.25);
+  }
   .bar.tier3 .fill{
-    background:linear-gradient(90deg,#60a5fa,#93c5fd,#e0e7ff);
-    filter:drop-shadow(0 0 10px rgba(96,165,250,.5));
+    background:linear-gradient(90deg,#7aa7ff,#b9d0ff,#e6ecff);
+    filter:drop-shadow(0 0 12px rgba(122,167,255,.55));
   }
 
-  /* ===== Topic & Sub lists ===== */
-  .topic{display:flex;gap:12px;align-items:center}
-  .topic-name{flex:1;font-weight:700}
-
-  /* ===== Tier Area ===== */
-  .tier-wrap{display:grid; grid-template-columns: 1fr minmax(260px, 1.2fr) 1fr; gap:16px; align-items:center}
+  /* Tier zone */
+  .tier-wrap{display:grid; grid-template-columns: 1fr minmax(280px,1.2fr) 1fr; gap:16px; align-items:center}
   .tier-img{
     display:flex; align-items:center; justify-content:center;
-    background:#0b1328; border:1px solid var(--border); border-radius:12px; padding:8px; min-height:160px;
+    background:#0a1429; border:1px solid var(--border); border-radius:12px; padding:8px; min-height:160px;
   }
-  .tier-img img{max-width:100%; max-height:260px; display:block; border-radius:10px; object-fit:contain}
+  .tier-img.has-img{background:transparent;border:0; padding:0; min-height:auto}
+  .tier-img img{max-width:100%; max-height:280px; display:block; border-radius:10px; object-fit:contain}
   .tier-center{grid-column: 1 / 4; justify-content:center}
+  .badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:4px 8px;border-radius:999px;border:1px solid #263a6b;background:#0a1533}
 
-  .badge{display:inline-flex;align-items:center;gap:6px; font-size:12px; padding:4px 8px; border-radius:999px; border:1px solid #263465; background:#0a1330}
-  .tiny{font-size:12px;color:var(--muted)}
-
-  /* ===== Modal ===== */
+  /* Modal (responsive, footer always visible) */
   .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; padding:16px;
-         background:rgba(2,6,23,.6); z-index:100}
-  .dialog{width:min(920px, calc(100% - 24px)); background:linear-gradient(180deg,rgba(16,24,40,.95),rgba(8,12,24,.95));
-          border:1px solid var(--border); box-shadow:var(--shadow); border-radius:16px; overflow:hidden}
-  .dialog header, .dialog footer{padding:12px 14px; border-bottom:1px solid var(--border)}
-  .dialog footer{border-top:1px solid var(--border); border-bottom:0; display:flex; gap:8px; justify-content:flex-end}
-  .dialog .body{padding:12px 14px}
-  .grid2{display:grid; grid-template-columns: 1fr 1fr; gap:12px}
+         background:rgba(3,7,18,.65); z-index:100}
+  .dialog{
+    width:min(100%, 960px); max-height:min(90vh, 780px);
+    background:linear-gradient(180deg, rgba(16,24,40,.96), rgba(10,16,30,.96));
+    border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow);
+    display:flex; flex-direction:column; overflow:hidden;
+  }
+  .dialog header{padding:12px 14px; border-bottom:1px solid var(--border)}
+  .dialog .body{padding:12px 14px; overflow:auto; flex:1}
+  .dialog footer{padding:12px 14px; border-top:1px solid var(--border); background:#0b1429; display:flex; gap:8px; justify-content:flex-end}
 
-  table{width:100%; border-collapse:collapse; table-layout:auto}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+
+  table{width:100%; border-collapse:collapse}
   th,td{border-bottom:1px solid var(--border); padding:10px 8px; text-align:left; font-size:13px; vertical-align:top}
   th{color:var(--muted); font-weight:700}
   .note{white-space:pre-wrap; word-break:break-word; color:#d1d5db}
+
+  /* Mobile tweaks */
+  @media (max-width: 920px){
+    .tier-wrap{grid-template-columns:1fr}
+    .tier-center{grid-column:1}
+    .grid2{grid-template-columns:1fr}
+    header .row{gap:8px}
+  }
 </style>
 </head>
 <body>
@@ -137,13 +161,13 @@
     <div class="row">
       <button class="btn" id="addTopicBtn">เพิ่มหัวข้อหลัก</button>
       <button class="btn secondary" id="exportAllBtn">ส่งออกข้อมูลทั้งหมด</button>
-      <span class="pill" id="statusPill">v3.3 • Local (Dark)</span>
+      <span class="pill">v3.4 • Local (Neo-Dark)</span>
     </div>
   </header>
 
   <!-- HOME -->
   <section id="homeView" class="grid">
-    <div class="card soft"><span class="muted">แตะหัวข้อหลักเพื่อเข้าไปจัดการหัวข้อย่อยและ Tier</span></div>
+    <div class="card soft"><span class="muted">แตะหัวข้อหลักเพื่อเข้าไปจัดการหัวข้อย่อย / Tier / Quests</span></div>
     <div id="topicsList" class="grid"></div>
   </section>
 
@@ -153,37 +177,33 @@
       <div class="row">
         <button class="btn ghost" id="backHomeBtn">← กลับหน้าแรก</button>
         <h2 id="mainTitle" class="topic-name"></h2>
-        <span class="badge" id="mainSummary">—</span>
+        <span id="mainSummary" class="badge">—</span>
         <button class="btn danger" id="deleteMainBtn">ลบหัวข้อหลักนี้</button>
       </div>
     </div>
     <div class="card">
       <div class="row" style="align-items:center">
-        <div style="font-weight:700">หัวข้อย่อย</div>
+        <div style="font-weight:800">หัวข้อย่อย</div>
         <button class="btn soft right" id="addSubBtn">เพิ่มหัวข้อย่อย</button>
       </div>
       <div id="subsList" class="grid" style="margin-top:8px"></div>
     </div>
   </section>
 
-  <!-- SUB (Tier + Quests) -->
+  <!-- SUB -->
   <section id="subView" class="grid" style="display:none">
     <div class="card">
       <div class="row">
         <button class="btn ghost" id="backMainBtn">← กลับหัวข้อหลัก</button>
         <h2 id="subTitle" class="topic-name"></h2>
-        <span class="badge" id="subBadge">—</span>
+        <span id="subBadge" class="badge">—</span>
         <button class="btn soft" id="editSubTiersBtn">จัดการ Tier</button>
       </div>
 
-      <!-- Tier area -->
-      <div id="tierArea" class="tier-wrap" style="margin-top:10px">
-        <!-- ซ้าย: รูปปัจจุบัน / ขวา: รูปถัดไป / กลาง: แถบรวม -->
-      </div>
-      <div class="tiny" id="tierHint" style="margin-top:6px"></div>
+      <div id="tierArea" class="tier-wrap" style="margin-top:10px"></div>
+      <div id="tierHint" class="muted" style="margin-top:6px"></div>
     </div>
 
-    <!-- Quests -->
     <div class="card">
       <div class="row" style="align-items:center">
         <h3 class="topic-name" style="margin:0">Quests</h3>
@@ -192,19 +212,18 @@
       <div id="questsList" class="grid" style="margin-top:8px"></div>
 
       <div class="row" style="margin-top:10px">
-        <button class="btn success" id="saveBtn">Save (บันทึกสถานะปัจจุบัน)</button>
+        <button class="btn success" id="saveBtn">Save (บันทึกสถานะ)</button>
         <button class="btn ghost" id="refreshBtn">รีเฟรช</button>
       </div>
     </div>
 
-    <!-- History -->
     <div class="card">
       <div class="row" style="align-items:center">
         <h3 class="topic-name" style="margin:0">ประวัติ</h3>
         <button class="btn soft" id="exportCsvBtn">ส่งออก CSV</button>
       </div>
       <table>
-        <thead><tr><th style="width:180px">วัน/เวลา</th><th>รายละเอียด</th><th style="width:130px">ชนิด</th></tr></thead>
+        <thead><tr><th style="width:180px">วัน/เวลา</th><th>รายละเอียด</th><th style="width:140px">ชนิด</th></tr></thead>
         <tbody id="historyBody"></tbody>
       </table>
     </div>
@@ -213,39 +232,49 @@
   </section>
 </div>
 
-<!-- ===== Modal: Edit Sub Tiers ===== -->
-<div class="modal" id="subTierModal">
-  <div class="dialog">
-    <header class="row"><div style="font-weight:700">จัดการ Tier ของหัวข้อย่อย</div><button class="btn ghost right" id="stmClose">ปิด</button></header>
+<!-- Modal: Sub Tiers -->
+<div class="modal" id="subTierModal" aria-hidden="true">
+  <div class="dialog" role="dialog" aria-modal="true">
+    <header class="row">
+      <div style="font-weight:800">จัดการ Tier ของหัวข้อย่อย</div>
+      <button class="btn ghost right" id="stmClose">ปิด</button>
+    </header>
     <div class="body">
-      <div class="muted" style="margin-bottom:10px">อัปโหลดรูป/แก้ชื่อ/จำนวนช่อง/หน่วยไปต่อของแต่ละ Tier</div>
+      <div class="muted" style="margin-bottom:10px">อัปโหลดรูป / ตั้งชื่อ / จำนวนช่อง / หน่วยไปต่อ ของแต่ละ Tier</div>
       <div id="stmList" class="grid"></div>
       <div class="row" style="margin-top:10px">
         <button class="btn soft" id="stmAddTier">เพิ่ม Tier</button>
         <button class="btn ghost" id="stmRemoveLast">ลบ Tier สุดท้าย</button>
       </div>
     </div>
-    <footer><button class="btn success" id="stmSave">บันทึก</button></footer>
+    <footer>
+      <button class="btn success" id="stmSave">บันทึก</button>
+    </footer>
   </div>
 </div>
 
-<!-- ===== Modal: Edit Quest ===== -->
-<div class="modal" id="questModal">
-  <div class="dialog">
-    <header class="row"><div style="font-weight:700">ตั้งค่า Quest</div><button class="btn ghost right" id="qmClose">ปิด</button></header>
-    <div class="body grid2">
-      <div>
-        <label>ชื่อ Quest</label>
-        <input type="text" id="qmName">
-        <div class="row" style="margin-top:8px">
-          <button class="btn soft" id="qmAddTier">เพิ่ม Tier</button>
-          <button class="btn ghost" id="qmRemoveLast">ลบ Tier สุดท้าย</button>
+<!-- Modal: Quest -->
+<div class="modal" id="questModal" aria-hidden="true">
+  <div class="dialog" role="dialog" aria-modal="true">
+    <header class="row">
+      <div style="font-weight:800">ตั้งค่า Quest</div>
+      <button class="btn ghost right" id="qmClose">ปิด</button>
+    </header>
+    <div class="body">
+      <div class="grid2">
+        <div>
+          <label>ชื่อ Quest</label>
+          <input type="text" id="qmName" />
+          <div class="row" style="margin-top:8px">
+            <button class="btn soft" id="qmAddTier">เพิ่ม Tier</button>
+            <button class="btn ghost" id="qmRemoveLast">ลบ Tier สุดท้าย</button>
+          </div>
+        </div>
+        <div class="card soft">
+          <div class="muted">Tier จะใช้งานตามลำดับ (T1 → T2 → …) • ใส่เงื่อนไขแต่ละ Tier เพื่อบอกวิธีผ่านระดับ</div>
         </div>
       </div>
-      <div class="card soft">
-        <div class="muted">หมายเหตุ: Tier จะใช้งานจริงตามลำดับที่ตั้ง (T1 → T2 → ...)</div>
-      </div>
-      <div style="grid-column:1/3" id="qmTierList" class="grid"></div>
+      <div id="qmTierList" class="grid" style="margin-top:10px"></div>
     </div>
     <footer>
       <button class="btn danger" id="qmDelete">ลบ Quest</button>
@@ -255,7 +284,7 @@
 </div>
 
 <script>
-/* ================= Storage & Helpers ================= */
+/* ===== Storage ===== */
 const DB_KEY='psd_v3_tiers_dark';
 function nowISO(){return new Date().toISOString();}
 function uid(){return 'id'+Math.random().toString(36).slice(2,10);}
@@ -263,13 +292,13 @@ function loadDB(){ try{const raw=localStorage.getItem(DB_KEY); return raw?JSON.p
 function saveDB(db){ localStorage.setItem(DB_KEY, JSON.stringify(db)); }
 let db=loadDB();
 
-/* ---------- Model Ensure ---------- */
+/* ===== Ensure models ===== */
 function ensureTopic(t){ t.subs ||= []; return t; }
 function ensureSub(s){
   s.tiers ||= [
-    {label:'Beginner', segments:5, unitsToNext:5, img:null},
-    {label:'Intermediate', segments:6, unitsToNext:6, img:null},
-    {label:'Advanced', segments:7, unitsToNext:7, img:null},
+    {label:'Beginner', segments:6, unitsToNext:6, img:null},
+    {label:'Intermediate', segments:7, unitsToNext:7, img:null},
+    {label:'Advanced', segments:8, unitsToNext:8, img:null},
   ];
   s.quests ||= [];
   s.history ||= [];
@@ -277,33 +306,28 @@ function ensureSub(s){
 }
 function ensureQuest(q){
   q.tiers ||= [
-    {label:'T1', segments:5, unitsToNext:5, condition:''},
-    {label:'T2', segments:6, unitsToNext:6, condition:''},
-    {label:'T3', segments:7, unitsToNext:7, condition:''},
+    {label:'T1', segments:5, unitsToNext:5, condition:'เริ่มติดนิสัย'},
+    {label:'T2', segments:6, unitsToNext:6, condition:'สม่ำเสมอ'},
+    {label:'T3', segments:7, unitsToNext:7, condition:'ชำนาญ'},
   ];
-  q.state ||= {tierIndex:0, units:0}; // units within current tier
+  q.state ||= {tierIndex:0, units:0};
   return q;
 }
 
-/* ---------- Progress Logic ---------- */
-/* questPercent: 0..100 across all quest tiers */
+/* ===== Progress logic ===== */
 function questPercent(q){
   ensureQuest(q);
-  const N=q.tiers.length;
-  const i=q.state.tierIndex;
+  const N=q.tiers.length, i=q.state.tierIndex;
   if(i>=N-1) return 100;
-  const need=q.tiers[i].unitsToNext||1;
+  const need=Math.max(1, q.tiers[i].unitsToNext||1);
   const frac=Math.max(0, Math.min(1, (q.state.units||0)/need));
-  const totalFrac=(i + frac)/N;
-  return totalFrac*100;
+  return ((i + frac)/N)*100;
 }
-/* sub overall percent = average of quest percents (if no quests => 0) */
 function subOverallPercent(sub){
   if(!(sub.quests||[]).length) return 0;
   const arr=sub.quests.map(questPercent);
   return arr.reduce((a,b)=>a+b,0)/arr.length;
 }
-/* map percent -> top tier index */
 function percentToTierIndex(percent, totalTiers){
   if(totalTiers<=1) return 0;
   const span=100/totalTiers;
@@ -312,21 +336,23 @@ function percentToTierIndex(percent, totalTiers){
   if(idx<0) idx=0;
   return idx;
 }
-/* percent within current sub tier (for pretty bar) */
 function percentWithinTier(percent, totalTiers){
   const span=100/Math.max(1,totalTiers);
   const idx=percentToTierIndex(percent,totalTiers);
   const base=idx*span;
   const within=Math.max(0, Math.min(span, percent-base));
-  return (within/span)*100; // 0..100
+  return (within/span)*100;
 }
 
-/* ---------- DOM Refs ---------- */
+/* ===== DOM ===== */
 const homeView=document.getElementById('homeView');
 const mainView=document.getElementById('mainView');
 const subView=document.getElementById('subView');
 
 const topicsList=document.getElementById('topicsList');
+const addTopicBtn=document.getElementById('addTopicBtn');
+const exportAllBtn=document.getElementById('exportAllBtn');
+
 const backHomeBtn=document.getElementById('backHomeBtn');
 const mainTitle=document.getElementById('mainTitle');
 const mainSummary=document.getElementById('mainSummary');
@@ -366,17 +392,16 @@ const qmRemoveLast=document.getElementById('qmRemoveLast');
 const qmSave=document.getElementById('qmSave');
 const qmDelete=document.getElementById('qmDelete');
 
-/* ---------- State ---------- */
-let currentMainId=null, currentSubId=null;
-let editingQuestId=null;
+/* ===== State ===== */
+let currentMainId=null, currentSubId=null, editingQuestId=null;
 
-/* ================= Home ================= */
+/* ===== Home ===== */
 function renderHome(){
   homeView.style.display='grid'; mainView.style.display='none'; subView.style.display='none';
   topicsList.innerHTML='';
   if(!db.topics.length){
     const card=document.createElement('div'); card.className='card soft';
-    card.innerHTML='<div class="muted">ยังไม่มีหัวข้อหลัก • กด “เพิ่มหัวข้อหลัก” ด้านบน</div>';
+    card.innerHTML='<span class="muted">ยังไม่มีหัวข้อหลัก • กด “เพิ่มหัวข้อหลัก”</span>';
     topicsList.appendChild(card);
   }else{
     db.topics.forEach(t=>{
@@ -386,9 +411,9 @@ function renderHome(){
         <div class="topic-name">${t.name}</div>
         <button class="btn ghost">เปิด</button>
         <button class="btn danger">ลบ</button>`;
-      const [btnOpen, btnDel]=card.querySelectorAll('button');
-      btnOpen.onclick=()=>openMain(t.id);
-      btnDel.onclick=()=>{
+      const [openBtn, delBtn]=card.querySelectorAll('button');
+      openBtn.onclick=()=>openMain(t.id);
+      delBtn.onclick=()=>{
         if(!confirm(`ลบ "${t.name}" ทั้งหมด?`)) return;
         db.topics=db.topics.filter(x=>x.id!==t.id); saveDB(db); renderHome();
       };
@@ -396,19 +421,19 @@ function renderHome(){
     });
   }
 }
-document.getElementById('addTopicBtn').onclick=()=>{
+addTopicBtn.onclick=()=>{
   const name=prompt('ชื่อหัวข้อหลัก'); if(!name) return;
   db.topics.push(ensureTopic({id:uid(),name:name.trim(),subs:[]}));
   saveDB(db); renderHome();
 };
-document.getElementById('exportAllBtn').onclick=()=>{
+exportAllBtn.onclick=()=>{
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([JSON.stringify(db,null,2)],{type:'application/json'}));
-  a.download='progress_backup_dark.json';
+  a.download='progress_backup_neo_dark.json';
   document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
 };
 
-/* ================= Topic ================= */
+/* ===== Topic ===== */
 function openMain(id){
   currentMainId=id; currentSubId=null;
   const main=db.topics.find(t=>t.id===id); ensureTopic(main);
@@ -425,8 +450,8 @@ function openMain(id){
       const pct=subOverallPercent(s);
       const card=document.createElement('div'); card.className='card topic';
       card.innerHTML=`
-        <div class="topic-name"><strong>${s.name}</strong> <span class="tiny">• ความคืบหน้าโดยรวม ${Math.round(pct)}%</span></div>
-        <div style="flex:1; min-width:220px">
+        <div class="topic-name"><strong>${s.name}</strong> <span class="muted">• ${Math.round(pct)}%</span></div>
+        <div style="flex:1;min-width:220px">
           <div class="bar"><div class="fill" style="width:${pct}%"></div></div>
         </div>
         <button class="btn ghost">เปิด</button>`;
@@ -439,13 +464,17 @@ backHomeBtn.onclick=()=>{ currentMainId=null; renderHome(); };
 addSubBtn.onclick=()=>{
   const main=db.topics.find(t=>t.id===currentMainId); if(!main) return;
   const name=prompt('ชื่อหัวข้อย่อย'); if(!name) return;
-  let n = Number(prompt('ต้องการกี่ Tier (2–6)?', '3')); if(!Number.isFinite(n)||n<2||n>6) n=3;
+  let n=Number(prompt('ต้องการกี่ Tier (2–6)?','3')); if(!Number.isFinite(n)||n<2||n>6) n=3;
   const tiers=[];
   for(let i=0;i<n;i++){
-    tiers.push({label: i===0?'Beginner': i===n-1?'Master':`Tier ${i+1}`, segments:5+i, unitsToNext:5+i, img:null});
+    tiers.push({label: i===0?'Beginner': i===n-1?'Master':`Tier ${i+1}`, segments: 5+i, unitsToNext: 5+i, img:null});
   }
-  main.subs.push(ensureSub({id:uid(), name:name.trim(), tiers, quests:[], history:[]}));
-  saveDB(db); openMain(currentMainId);
+  const sub=ensureSub({id:uid(), name:name.trim(), tiers, quests:[], history:[]});
+  main.subs.push(sub);
+  saveDB(db);
+  openSub(sub.id);
+  // เปิดตั้งค่า Tier ทันที เพื่อแก้ภาพ/ช่อง/หน่วย
+  openSubTierModal();
 };
 deleteMainBtn.onclick=()=>{
   const i=db.topics.findIndex(t=>t.id===currentMainId); if(i<0) return;
@@ -453,7 +482,7 @@ deleteMainBtn.onclick=()=>{
   db.topics.splice(i,1); saveDB(db); currentMainId=null; renderHome();
 };
 
-/* ================= Sub ================= */
+/* ===== Sub ===== */
 function openSub(subId){
   currentSubId=subId;
   const main=db.topics.find(t=>t.id===currentMainId);
@@ -464,83 +493,84 @@ function openSub(subId){
 }
 backMainBtn.onclick=()=>openMain(currentMainId);
 
-/* ----- Sub Header (Tier images + overall bar) ----- */
 function renderSubHeader(){
   const main=db.topics.find(t=>t.id===currentMainId);
   const sub=main.subs.find(s=>s.id===currentSubId); ensureSub(sub);
-
-  const overall=subOverallPercent(sub);
   const N=sub.tiers.length;
+  const overall=subOverallPercent(sub);
   const idx=percentToTierIndex(overall,N);
   const within=percentWithinTier(overall,N);
   const currentTier=sub.tiers[idx];
   const nextTier=(idx<N-1)? sub.tiers[idx+1] : null;
 
-  subBadge.innerHTML = `ค่า ณ ปัจจุบัน: Tier ${idx+1}/${N} • ${currentTier.label} • รวม ${Math.round(overall)}%`;
-
+  subBadge.innerHTML=`รวม: ${Math.round(overall)}% • Tier ${idx+1}/${N} • ${currentTier.label}`;
   tierArea.innerHTML='';
-  const left=document.createElement('div'); left.className='tier-img';
-  left.innerHTML = currentTier.img ? `<img src="${currentTier.img}" alt="current">` : `<div class="muted">ยังไม่เลือกรูป Tier ปัจจุบัน</div>`;
-  const center=document.createElement('div');
+
+  // โซนกลาง: แถบรวม
   const barClass = idx>=N-1 ? 'bar tier3' : idx>=1 ? 'bar tier2' : 'bar';
+  const center=document.createElement('div');
   center.innerHTML = `
     <div class="row" style="justify-content:center;margin-bottom:6px">
-      <span class="badge">Tier ${idx+1} / ${N} • ${currentTier.label}</span>
-      ${nextTier? `<span class="tiny">→</span><span class="badge">ถัดไป: ${idx+2} • ${nextTier.label}</span>` : `<span class="badge">ถึง Tier สูงสุดแล้ว</span>`}
+      <span class="badge">ปัจจุบัน: ${currentTier.label} (T${idx+1}/${N})</span>
+      ${ nextTier ? `<span class="muted">→</span><span class="badge">ถัดไป: ${nextTier.label} (T${idx+2})</span>` : `<span class="badge">ถึง Tier สูงสุดแล้ว</span>`}
     </div>
     <div class="${barClass}">
       <div class="fill" style="width:${within}%"></div>
       ${Array.from({length:Math.max(1,currentTier.segments)}).map((_,i)=>`<span class="seg" style="left:${(i+1)*100/(currentTier.segments+1)}%"></span>`).join('')}
     </div>
-    <div class="tiny" style="text-align:center;margin-top:6px">ความคืบหน้าจากค่าเฉลี่ยทุก Quest ในหัวข้อนี้</div>
+    <div class="muted" style="text-align:center;margin-top:6px">คำนวณจากความคืบหน้าเฉลี่ยของทุก Quest</div>
   `;
+
   if(nextTier){
-    const right=document.createElement('div'); right.className='tier-img';
-    right.innerHTML = nextTier.img ? `<img src="${nextTier.img}" alt="next">` : `<div class="muted">ยังไม่เลือกรูป Tier ถัดไป</div>`;
+    // ซ้าย/ขวา: รูปปัจจุบัน/ถัดไป
+    const left=document.createElement('div'); left.className='tier-img' + (currentTier.img?' has-img':'');
+    left.innerHTML = currentTier.img ? `<img src="${currentTier.img}" alt="current">` : `<div class="muted">ยังไม่มีรูป Tier ปัจจุบัน</div>`;
+    const right=document.createElement('div'); right.className='tier-img' + (nextTier.img?' has-img':'');
+    right.innerHTML = nextTier.img ? `<img src="${nextTier.img}" alt="next">` : `<div class="muted">ยังไม่มีรูป Tier ถัดไป</div>`;
     tierArea.append(left, center, right);
   }else{
-    // สุดท้าย: เอารูปมาวางกลาง
-    center.classList.add('tier-center');
-    tierArea.append(center);
-    tierArea.prepend(left); // แสดงปัจจุบันด้วย
+    // สุดท้าย: แสดงรูป “กลาง” เท่านั้น (ไม่เหลือหลอดไปต่อ)
+    const centerWrap=document.createElement('div'); centerWrap.className='tier-center';
+    const imgBox=document.createElement('div'); imgBox.className='tier-img' + (currentTier.img?' has-img':'');
+    imgBox.innerHTML = currentTier.img ? `<img src="${currentTier.img}" alt="current">` : `<div class="muted">ยังไม่มีรูป Tier นี้</div>`;
+    centerWrap.appendChild(imgBox);
+    tierArea.append(centerWrap); // รูปตรงกลาง
   }
 
-  tierHint.textContent = '* เมื่อความคืบหน้ารวมถึงเกณฑ์ช่วงของ Tier ถัดไป ระบบจะเลื่อนไปอัตโนมัติ (คิดจากค่าเฉลี่ยร้อยละของทุก Quest)';
+  tierHint.textContent='* สามารถอัปโหลด/แก้ช่อง/หน่วยของ Tier ได้ที่ปุ่ม “จัดการ Tier”';
 }
 
-/* ----- Quests UI ----- */
+/* ===== Quests ===== */
 function renderQuests(){
   const main=db.topics.find(t=>t.id===currentMainId);
   const sub=main.subs.find(s=>s.id===currentSubId); ensureSub(sub);
-
   questsList.innerHTML='';
   if(!sub.quests.length){
     const empty=document.createElement('div'); empty.className='card soft'; empty.innerHTML='<span class="muted">ยังไม่มี Quest</span>';
     questsList.appendChild(empty);
   }
-
   sub.quests.forEach(q=>{
     ensureQuest(q);
     const N=q.tiers.length, i=q.state.tierIndex;
     const cur=q.tiers[Math.min(i,N-1)];
-    const need= i>=N-1 ? 0 : (cur.unitsToNext||1);
+    const need = (i>=N-1)? 0 : Math.max(1,cur.unitsToNext||1);
     const units=q.state.units||0;
-    const frac= i>=N-1 ? 1 : Math.max(0, Math.min(1, units/need));
+    const frac = (i>=N-1)? 1 : Math.max(0, Math.min(1, units/need));
     const barClass = i>=N-1 ? 'bar tier3' : i>=1 ? 'bar tier2' : 'bar';
 
     const row=document.createElement('div'); row.className='card';
     row.innerHTML = `
-      <div class="row" style="align-items:flex-start; gap:14px">
+      <div class="row" style="align-items:flex-start;gap:14px">
         <div class="topic-name">
-          <div style="font-weight:800">${q.title} <span class="badge">T${i+1}/${N}</span></div>
-          <div class="tiny" style="margin-top:2px">${cur.condition?cur.condition:'—'}</div>
+          <div style="font-weight:800">${q.title} <span class="badge">T${i+1}/${N} • ${cur.label||('Tier '+(i+1))}</span></div>
+          <div class="muted" style="margin-top:2px">${cur.condition?cur.condition:'—'}</div>
         </div>
-        <div style="flex:1; min-width:260px">
+        <div style="flex:1;min-width:260px">
           <div class="${barClass}">
-            <div class="fill" style="width:${frac*100}%"></div>
+            <div class="fill" style="width:${(frac*100)}%"></div>
             ${Array.from({length:Math.max(1,cur.segments)}).map((_,j)=>`<span class="seg" style="left:${(j+1)*100/(cur.segments+1)}%"></span>`).join('')}
           </div>
-          <div class="tiny" style="margin-top:4px">${ i<N-1 ? `หน่วยที่ต้องใช้ใน Tier นี้: ${need} • ตอนนี้: ${units}` : `อยู่ Tier สูงสุดแล้ว`}</div>
+          <div class="muted" style="margin-top:4px">${ i<N-1 ? `หน่วยใน Tier นี้: ${units}/${need}` : `อยู่ Tier สูงสุดแล้ว`}</div>
         </div>
         <div class="row">
           <button class="btn success">เพิ่ม +</button>
@@ -551,11 +581,10 @@ function renderQuests(){
       </div>
     `;
     const [bPlus,bMinus,bEdit,bDel]=row.querySelectorAll('button');
-
-    bPlus.onclick=()=>{ adjustQuest(q, +1); };
-    bMinus.onclick=()=>{ adjustQuest(q, -1); };
-    bEdit.onclick =()=> openQuestModal(q.id);
-    bDel.onclick  =()=>{
+    bPlus.onclick = ()=>adjustQuest(q,+1);
+    bMinus.onclick= ()=>adjustQuest(q,-1);
+    bEdit.onclick  = ()=>openQuestModal(q.id);
+    bDel.onclick   = ()=>{
       if(!confirm(`ลบ "${q.title}" ?`)) return;
       sub.quests=sub.quests.filter(x=>x.id!==q.id); saveDB(db); renderQuests(); renderSubHeader();
     };
@@ -566,55 +595,46 @@ addQuestBtn.onclick=()=>{
   const main=db.topics.find(t=>t.id===currentMainId);
   const sub=main.subs.find(s=>s.id===currentSubId); ensureSub(sub);
   const name=prompt('ชื่อ Quest'); if(!name) return;
-  let n=Number(prompt('ต้องการกี่ Tier (2–6)?','3')); if(!Number.isFinite(n)||n<2||n>6) n=3;
+  let n=Number(prompt('กี่ Tier (2–6)?','3')); if(!Number.isFinite(n)||n<2||n>6) n=3;
   const tiers=[];
   for(let i=0;i<n;i++){
-    tiers.push({label:`T${i+1}`, segments:5+i, unitsToNext:5+i, condition:(i===0?'': '')});
+    tiers.push({label:`T${i+1}`, segments:5+i, unitsToNext:5+i, condition:''});
   }
-  sub.quests.push(ensureQuest({id:uid(), title:name.trim(), tiers, state:{tierIndex:0,units:0}}));
-  saveDB(db); renderQuests(); renderSubHeader();
+  const q=ensureQuest({id:uid(), title:name.trim(), tiers, state:{tierIndex:0,units:0}});
+  sub.quests.push(q); saveDB(db); renderQuests(); renderSubHeader();
 };
 
-/* adjust quest units / tier */
 function adjustQuest(q, delta){
   ensureQuest(q);
   const main=db.topics.find(t=>t.id===currentMainId);
   const sub=main.subs.find(s=>s.id===currentSubId);
-  const prevSubIdx = percentToTierIndex(subOverallPercent(sub), sub.tiers.length);
+  const beforeIdx = percentToTierIndex(subOverallPercent(sub), sub.tiers.length);
 
   let i=q.state.tierIndex, u=q.state.units||0, N=q.tiers.length;
-  if(i>=N-1 && delta>0){
-    // maxed
-  }else if(delta>0){
-    u++;
-    const need=q.tiers[i].unitsToNext||1;
-    if(u>=need){ i++; u=0; pushHistory(sub, `เลื่อนไปเป็น ${q.title} → T${i+1}`, 'QUEST_TIER_UP'); }
-  }else{ // decrease
-    if(i<=0 && u<=0){
-      u=0; i=0;
-    }else if(u>0){
-      u--;
-    }else if(i>0){
-      i--; u=(q.tiers[i].unitsToNext||1)-1;
-      pushHistory(sub, `ลดระดับ ${q.title} → T${i+1}`, 'QUEST_TIER_DOWN');
+  if(delta>0){
+    if(i>=N-1){ /* maxed */ }
+    else{
+      u++;
+      const need=Math.max(1, q.tiers[i].unitsToNext||1);
+      if(u>=need){ i++; u=0; pushHistory(sub, `เลื่อน ${q.title} → T${i+1}`, 'QUEST_TIER_UP'); }
     }
+  }else{
+    if(i<=0 && u<=0){ u=0; i=0; }
+    else if(u>0){ u--; }
+    else if(i>0){ i--; u=Math.max(0,(q.tiers[i].unitsToNext||1)-1); pushHistory(sub, `ลด ${q.title} → T${i+1}`, 'QUEST_TIER_DOWN'); }
   }
   q.state.tierIndex=i; q.state.units=u;
   saveDB(db); renderQuests();
 
-  // check sub tier mapping change after update
-  const newIdx = percentToTierIndex(subOverallPercent(sub), sub.tiers.length);
-  if(newIdx>prevSubIdx) pushHistory(sub, `เลื่อนเป็น Tier ${prevSubIdx+1} → ${newIdx+1}`, 'SUB_TIER_UP');
-  if(newIdx<prevSubIdx) pushHistory(sub, `ลดเป็น Tier ${prevSubIdx+1} → ${newIdx+1}`, 'SUB_TIER_DOWN');
+  const afterIdx = percentToTierIndex(subOverallPercent(sub), sub.tiers.length);
+  if(afterIdx>beforeIdx) pushHistory(sub, `รวม: Tier ${beforeIdx+1} → ${afterIdx+1}`, 'SUB_TIER_UP');
+  if(afterIdx<beforeIdx) pushHistory(sub, `รวม: Tier ${beforeIdx+1} → ${afterIdx+1}`, 'SUB_TIER_DOWN');
 
   renderSubHeader(); renderHistory();
 }
 
-/* ----- History ----- */
-function pushHistory(sub, note, kind){
-  sub.history.push({time:nowISO(), note, kind});
-  saveDB(db);
-}
+/* ===== History ===== */
+function pushHistory(sub, note, kind){ sub.history.push({time:nowISO(), note, kind}); saveDB(db); }
 function renderHistory(){
   const main=db.topics.find(t=>t.id===currentMainId);
   const sub=main.subs.find(s=>s.id===currentSubId); ensureSub(sub);
@@ -636,8 +656,7 @@ exportCsvBtn.onclick=()=>{
   document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
 };
 
-/* Save snapshot (optional) */
-saveBtn.onclick=()=>{ alert('บันทึกแล้ว (สถานะปัจจุบันถูกเก็บใน localStorage แล้ว)'); };
+saveBtn.onclick=()=>alert('บันทึกแล้ว (สถานะถูกเก็บในเครื่อง)');
 refreshBtn.onclick=()=>{ renderSubHeader(); renderQuests(); renderHistory(); };
 deleteSubBtn.onclick=()=>{
   if(!confirm('ลบหัวข้อย่อยนี้ทั้งหมด?')) return;
@@ -645,23 +664,7 @@ deleteSubBtn.onclick=()=>{
   main.subs=main.subs.filter(s=>s.id!==currentSubId); saveDB(db); openMain(currentMainId);
 };
 
-/* ================= Sub Tier Modal ================= */
-editSubTiersBtn.onclick=()=>openSubTierModal();
-stmClose.onclick=()=> closeModal(subTierModal);
-stmAddTier.onclick=()=>{
-  const m=db.topics.find(t=>t.id===currentMainId);
-  const s=m.subs.find(x=>x.id===currentSubId);
-  s.tiers.push({label:`Tier ${s.tiers.length+1}`, segments:5, unitsToNext:5, img:null});
-  saveDB(db); buildSTM(); renderSubHeader();
-};
-stmRemoveLast.onclick=()=>{
-  const m=db.topics.find(t=>t.id===currentMainId);
-  const s=m.subs.find(x=>x.id===currentSubId);
-  if(s.tiers.length<=1) return alert('ต้องมีอย่างน้อย 1 Tier');
-  s.tiers.pop(); saveDB(db); buildSTM(); renderSubHeader();
-};
-stmSave.onclick=()=>{ saveSTM(); closeModal(subTierModal); renderSubHeader(); };
-
+/* ===== Sub Tier Modal ===== */
 function openSubTierModal(){ buildSTM(); openModal(subTierModal); }
 function buildSTM(){
   const m=db.topics.find(t=>t.id===currentMainId);
@@ -671,30 +674,45 @@ function buildSTM(){
     const card=document.createElement('div'); card.className='card';
     card.innerHTML=`
       <div class="row" style="align-items:flex-start">
-        <div style="width:120px" class="tier-img">${tr.img?`<img src="${tr.img}">`:'<div class="muted">ไม่มีรูป</div>'}</div>
+        <div style="width:140px" class="tier-img ${tr.img?'has-img':''}">${tr.img?`<img src="${tr.img}">`:'<div class="muted">ไม่มีรูป</div>'}</div>
         <div style="flex:1" class="grid2">
-          <div><label>ชื่อ Tier</label><input type="text" data-k="label" value="${tr.label||''}" data-i="${idx}"></div>
-          <div><label>จำนวนช่อง (segments)</label><input type="number" min="1" data-k="segments" value="${tr.segments||5}" data-i="${idx}"></div>
-          <div><label>หน่วยที่ใช้ไป Tier ถัดไป</label><input type="number" min="1" data-k="unitsToNext" value="${tr.unitsToNext||5}" data-i="${idx}"></div>
+          <div><label>ชื่อ Tier</label><input type="text" data-k="label" data-i="${idx}" value="${tr.label||''}"></div>
+          <div><label>จำนวนช่อง (segments)</label><input type="number" min="1" data-k="segments" data-i="${idx}" value="${tr.segments||5}"></div>
+          <div><label>หน่วยไปต่อ</label><input type="number" min="1" data-k="unitsToNext" data-i="${idx}" value="${tr.unitsToNext||5}"></div>
           <div><label>เลือกรูป</label><input type="file" accept="image/*" data-k="img" data-i="${idx}"></div>
         </div>
       </div>
     `;
     card.querySelector('input[type="file"]').onchange=(e)=>fileToDataUrl(e.target.files[0]).then(url=>{ tr.img=url; saveDB(db); buildSTM(); });
-    card.querySelectorAll('input[type="text"], input[type="number"]').forEach(inp=>{
-      inp.oninput=()=>{ const key=inp.dataset.k, i=+inp.dataset.i; s.tiers[i][key]= (inp.type==='number'? +inp.value : inp.value); saveDB(db); };
+    card.querySelectorAll('input[type="text"],input[type="number"]').forEach(inp=>{
+      inp.oninput=()=>{
+        const k=inp.dataset.k, i=+inp.dataset.i;
+        s.tiers[i][k] = (inp.type==='number' ? +inp.value : inp.value);
+        saveDB(db);
+      };
     });
     stmList.appendChild(card);
   });
 }
-function saveSTM(){ /* already updated on input */ }
+function saveSTM(){ /* เปลี่ยนแปลงถูกบันทึกทันทีแล้ว */ renderSubHeader(); }
+stmAddTier.onclick=()=>{
+  const s=getCurrentSub();
+  s.tiers.push({label:`Tier ${s.tiers.length+1}`, segments:5, unitsToNext:5, img:null});
+  saveDB(db); buildSTM();
+};
+stmRemoveLast.onclick=()=>{
+  const s=getCurrentSub();
+  if(s.tiers.length<=1) return alert('ต้องมีอย่างน้อย 1 Tier');
+  s.tiers.pop(); saveDB(db); buildSTM(); renderSubHeader();
+};
+stmSave.onclick=()=>{ closeModal(subTierModal); renderSubHeader(); };
+stmClose.onclick=()=>closeModal(subTierModal);
+editSubTiersBtn.onclick=()=>openSubTierModal();
 
-/* ================= Quest Modal ================= */
+/* ===== Quest Modal ===== */
 function openQuestModal(qid){
   editingQuestId=qid;
-  const m=db.topics.find(t=>t.id===currentMainId);
-  const s=m.subs.find(x=>x.id===currentSubId);
-  const q=s.quests.find(x=>x.id===qid); ensureQuest(q);
+  const q=getCurrentSub().quests.find(x=>x.id===qid); ensureQuest(q);
   qmName.value=q.title;
   buildQMTierList(q);
   openModal(questModal);
@@ -705,19 +723,17 @@ function buildQMTierList(q){
     const card=document.createElement('div'); card.className='card';
     card.innerHTML=`
       <div class="grid2">
-        <div><label>ชื่อ Tier</label><input type="text" value="${tr.label||''}" data-i="${idx}" data-k="label"></div>
-        <div><label>จำนวนช่อง (segments)</label><input type="number" min="1" value="${tr.segments||5}" data-i="${idx}" data-k="segments"></div>
-        <div><label>หน่วยไปต่อ Tier</label><input type="number" min="1" value="${tr.unitsToNext||5}" data-i="${idx}" data-k="unitsToNext"></div>
-        <div><label>เงื่อนไขของ Tier นี้</label><input type="text" value="${tr.condition||''}" data-i="${idx}" data-k="condition"></div>
+        <div><label>ชื่อ Tier</label><input type="text" data-k="label" data-i="${idx}" value="${tr.label||''}"></div>
+        <div><label>จำนวนช่อง (segments)</label><input type="number" min="1" data-k="segments" data-i="${idx}" value="${tr.segments||5}"></div>
+        <div><label>หน่วยไปต่อ</label><input type="number" min="1" data-k="unitsToNext" data-i="${idx}" value="${tr.unitsToNext||5}"></div>
+        <div><label>เงื่อนไขของ Tier นี้</label><input type="text" data-k="condition" data-i="${idx}" value="${tr.condition||''}"></div>
       </div>
     `;
     card.querySelectorAll('input').forEach(inp=>{
       inp.oninput=()=>{
-        const m=db.topics.find(t=>t.id===currentMainId);
-        const s=m.subs.find(x=>x.id===currentSubId);
-        const q=s.quests.find(x=>x.id===editingQuestId);
-        const i=+inp.dataset.i, k=inp.dataset.k;
-        q.tiers[i][k]= inp.type==='number'? +inp.value : inp.value;
+        const q2=getCurrentSub().quests.find(x=>x.id===editingQuestId);
+        const k=inp.dataset.k, i=+inp.dataset.i;
+        q2.tiers[i][k]= (inp.type==='number'? +inp.value : inp.value);
         saveDB(db);
       };
     });
@@ -725,41 +741,36 @@ function buildQMTierList(q){
   });
 }
 qmAddTier.onclick=()=>{
-  const m=db.topics.find(t=>t.id===currentMainId);
-  const s=m.subs.find(x=>x.id===currentSubId);
-  const q=s.quests.find(x=>x.id===editingQuestId);
+  const q=getCurrentSub().quests.find(x=>x.id===editingQuestId);
   q.tiers.push({label:`T${q.tiers.length+1}`, segments:5, unitsToNext:5, condition:''});
   saveDB(db); buildQMTierList(q);
 };
 qmRemoveLast.onclick=()=>{
-  const m=db.topics.find(t=>t.id===currentMainId);
-  const s=m.subs.find(x=>x.id===currentSubId);
-  const q=s.quests.find(x=>x.id===editingQuestId);
+  const q=getCurrentSub().quests.find(x=>x.id===editingQuestId);
   if(q.tiers.length<=1) return alert('อย่างน้อย 1 Tier');
   q.tiers.pop(); if(q.state.tierIndex>q.tiers.length-1) q.state.tierIndex=q.tiers.length-1;
   saveDB(db); buildQMTierList(q); renderQuests(); renderSubHeader();
 };
 qmSave.onclick=()=>{
-  const m=db.topics.find(t=>t.id===currentMainId);
-  const s=m.subs.find(x=>x.id===currentSubId);
-  const q=s.quests.find(x=>x.id===editingQuestId);
+  const q=getCurrentSub().quests.find(x=>x.id===editingQuestId);
   q.title=qmName.value.trim()||q.title; saveDB(db);
   closeModal(questModal); renderQuests(); renderSubHeader();
 };
 qmDelete.onclick=()=>{
-  const m=db.topics.find(t=>t.id===currentMainId);
-  const s=m.subs.find(x=>x.id===currentSubId);
+  const s=getCurrentSub();
   if(!confirm('ลบ Quest นี้?')) return;
   s.quests=s.quests.filter(x=>x.id!==editingQuestId); saveDB(db);
   closeModal(questModal); renderQuests(); renderSubHeader();
 };
 qmClose.onclick=()=>closeModal(questModal);
 
-/* ---------- Modal helpers ---------- */
+/* ===== Utils ===== */
 function openModal(el){ el.style.display='flex'; }
 function closeModal(el){ el.style.display='none'; }
-
-/* ---------- Files ---------- */
+function getCurrentSub(){
+  const m=db.topics.find(t=>t.id===currentMainId);
+  return m.subs.find(s=>s.id===currentSubId);
+}
 function fileToDataUrl(file){
   return new Promise((res,rej)=>{
     if(!file) return res(null);
@@ -770,7 +781,21 @@ function fileToDataUrl(file){
   });
 }
 
-/* ================= Init ================= */
+/* ESC ปิดโมดัล + Enter เซฟ (เฉพาะมอดัลที่เปิดอยู่) */
+window.addEventListener('keydown', (e)=>{
+  const anyOpen = subTierModal.style.display==='flex' || questModal.style.display==='flex';
+  if(!anyOpen) return;
+  if(e.key==='Escape'){
+    if(subTierModal.style.display==='flex') closeModal(subTierModal);
+    if(questModal.style.display==='flex') closeModal(questModal);
+  }
+  if(e.key==='Enter'){
+    if(questModal.style.display==='flex') qmSave.click();
+    if(subTierModal.style.display==='flex') stmSave.click();
+  }
+});
+
+/* ===== Init ===== */
 function start(){
   db.topics.forEach(ensureTopic);
   renderHome();
